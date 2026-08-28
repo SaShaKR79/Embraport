@@ -1,0 +1,98 @@
+Embracon – Call Deloitte (17.08.2026)
+
+ 
+
+Mayara Cristina Alves (accounting)
+Pammela Sampaio
+Felipe Argemi
+ 
+
+Números ilustrativos preparados pelo time da DTT.
+ 
+
+Consideraram o seguinte:
+ 
+
+Investimento atual que a CNP tem na consórcio e as entidades holdings têm na Embracon. Exemplo meramente ilustrativo. Investimetno 300 e Embracon 178.
+Etapas do SPA para facilitar.
+ 
+
+Na CNP:
+Adquire 14,7% via troca de ações e paga + x reais para comprar o resto (25,3%).
+Impacto patrimonial na holding que controla a CNP, é o valor que ela já tinha + caixa. Isso vai ser a base para os números de base fiscal lá na frente.
+Tudo aquilo que não é custo inicial dela, a origem é a reavaliação, o valuation. Impacta o resultado depois do desdobramento dos lançamentos contábeis 455. Por isso estão chamando de AVJ.
+Aquisição caixa teve reavaliação? – R: Não é o caixa que foi reavaliado, foi a parte das ações.
+Com a incorporação, grupo embracon foi diluído.
+O investimento inicial da CNP é shares + caixa.
+40% da Cia atualizada vale 2.355. Fizeram a abertura só pela matemática, mas a reavaliação é de 40% da cia conjunta, não o caixa ou o custo inicial do investimento da CNP. São 2 momentos diferentes com consequências distintas.
+Tudo que vem da reavaliação, vai tratar como item temporário, neutro da perspectiva fiscal. Só tributa quando realizar o ganho. Vai ser mantido em subconta, mas nada mais é do que uma conta específica com detalhamento do AVJ.
+Embracon:
+Troca de ações a mercado com efeito fiscal zero.
+% adquirido por meio do pagamento em espécie, não escapa de o fisco entender que houve ganho de capital.
+71 é 40% do investimento.
+3426 é o efeito da reavaliação. Está lançando em resultado. Diz que esse AVJ vai para resultado para fins contábeis.
+RC: Isso não é uma formação de JV. É combinação de negócios, certo?
+DTT: É uma joint operation.
+RC: Embracon adquiriu controle da CNP ou estão considerando que o resultado da transação é uma joint operation, e portanto estão remensuração no nível dos acionistas e não da Cia a valor justo. Não estão tratando como business combination. Bateram o martelo?
+Mayara: Já foi um tema bastante discutido com accounting da companhia. Concluíram que seria uma joint operation. Com embasamento técnico.
+Felipe Argemi: Discussão com o Ricardo da DTT. Importante trazer o Ricardo para entender.
+RC: Classificação traz N consequências contábeis e fiscais. Se será AVJ ou MEP, etc.
+Molina: Não é assunto da CNP. É da Embracon. Não participamos (Embracon).
+Pammela: Não teve aquisição de controle por um grupo específico, é controle compartilhado. Co-controle da operação.
+Felipe Argemi: CNP também quer reconhecer isso no resultado dela, se fosse CPC 15 ela não poderia reconhecer no resultado. Por isso combinaram que haverá um compartilhamento de controle. A questão foi só o entendimento das consequências da contratação da forma como veio.
+Rafael Andrade (SF): Do ponto de vista da transação societária não tem um co-controle. Se tivesse co-controle não teria sistemática de veto. Do ponto de vista societário, a Embracon segue com 60%, e nos documentos, o que se tem é uma entidade com direitos de governança materiais, por isso devem estar entendendo co-controle, mas societariamente não tem co-controle.
+RC: Estamos partindo de uma premissa de controle compartilhado, e a nosso ver não seria isso.
+Mayara: Melhor chamar as pessoas que chegaram a essa conclusão para checar se o contábil segue o societário aqui. Talvez com isso, os fundamentos, fique mais claro para todos.
+Pammela: O fiscal é acessório à interpretação. Considerando o controle compartilhado (aspas) para descaracterizar a operação enquanto combinação de negócios. Para fins fiscais, a norma contábil exige o reconhecimento da operação conjunta a valor justo.
+RC: Aspectos fiscais da perspectiva da Embracon mudam substancialmente. Se tratar como combinação de negócios versus joint operation. Podemos até mapear, mas o grande ponto está na premissa, ela vai carregar o tratamento tributário.
+Molina: Talvez marcar um outro momento com o Diego e todo mundo.
+Felipe: Estava muito claro para a CNP que seria um joint operation. Achavam que estavam todos alinhados.
+Felipe: Pessoal da CNP precisava que fosse joint operation para reconhecer o resultado. Melhor chamar os advogados da CNP e o Ricardo que ajudou.
+ 
+
+ 
+
+Alinhamento interno – Embracon
+
+ 
+
+Molina e Suely Cristina (Embracon).
+ 
+
+RC: Tem impacto. Cai a tese do MEP. Você teria que constituir passivo fiscal diferido. Parece que é importante para eles o seguinte: querem reavaliar 100% daquilo, e não só a parte deles. Ele reporta um ganho / resultado de 100% de 40% do business. Forçando a qualificação. Se ele for um minoritário numa entidade que comprou a CNP, ele vai ter equivalência patrimonial de 40%, e não o valor de mercado disso. Ele quer um grande resultado. Ele quer forçar a remensuração de 100% da parte dele a VJ e colocar o resultado para dentro. Nunca mais vamos conseguir liquidar as holdings para vender pela PF porque temos um ganho diferido nesse caso.
+ 
+
+RC: Veto não é controle compartilhado.
+ 
+
+Rafael Andrade (SF): A descrição do Bacen não entra no mérito de controle contábil. Todos que tiverem participação relevante é controlador. Não há uma regra concreta de co-controle, acha que conseguem justificar co-controle. A CNP tem vetos tão qualificados que tudo está sujeito à anuência deles então isso qualificaria co-controle.
+ 
+
+Molina: Não toparam vender na física, tem que ser na jurídica.
+ 
+
+RC: Ele vai colocar no preço esse passivo diferido. A premissa do deal é uma combinação de negócios.
+ 
+
+Rafael: o Contrato não fala sobre controle. Do ponto de vista societário não tem co-controle. Isso é só quando as duas partes têm direito equivalente. Aí não precisa desse negócio de veto. Ela pode propor coisas e aí a gente tem veto, não.
+ 
+
+Molina: Contrato fala em combinação de negócios.
+ 
+
+RC: Questão do controle é determinante.
+ 
+
+Rafael: O argumento que eles devem adotar é esse argumento do poder de veto ser relevante. Tem que entender o fundamento adotado pela DTT.
+ 
+
+RC: No curto preza não faz dirença para a Embracon, mas depois faz.
+ 
+
+Molina pediu a diferença de uma para outra situação. Pros e contras de cada um. Para falarmos internamente antes de falar com eles.  
+ 
+
+RC: O auditor da Embracon que define se é CPC 15 ou CPC 19.
+ 
+
+Rafael: Não atrapalha o closing, mas temos que aceitar isso.
