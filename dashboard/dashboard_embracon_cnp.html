@@ -1,0 +1,628 @@
+<title>Radiografia Another House</title>
+<style>
+:root{--surface:#fcfcfb;--plane:#f6f6f3;--ink:#0b0b0b;--ink2:#54534f;--mut:#8d8b85;
+ --line:#e4e3dc;--edge:#c9c8bf;--ring:rgba(11,11,11,.09);
+ --real:#2a78d6;--pres:#eb6834;--nd:#8d8b85;
+ --ok:#0d8a2f;--aval:#c98500;--rever:#c0392b;--esp:#8d8b85;
+ --brand:#e10913;--ppbg:#211f1e}
+@media (prefers-color-scheme: dark){
+:root:not([data-theme="light"]){--surface:#1a1a19;--plane:#111110;--ink:#fff;--ink2:#c3c2b7;--mut:#8d8b85;
+ --line:#2c2c2a;--edge:#3a3a37;--ring:rgba(255,255,255,.11);
+ --real:#3987e5;--pres:#e0703f;--ok:#2faa4c;--aval:#d19a1e;--rever:#e07168;--ppbg:#31312d}
+}
+:root[data-theme="dark"]{--surface:#1a1a19;--plane:#111110;--ink:#fff;--ink2:#c3c2b7;--mut:#8d8b85;
+ --line:#2c2c2a;--edge:#3a3a37;--ring:rgba(255,255,255,.11);
+ --real:#3987e5;--pres:#e0703f;--ok:#2faa4c;--aval:#d19a1e;--rever:#e07168;--ppbg:#31312d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--plane);color:var(--ink);
+ font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14.5px;line-height:1.6}
+.wrap{max-width:1240px;margin:0 auto;padding:0 26px 90px}
+header{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--edge)}
+.hd{max-width:1240px;margin:0 auto;padding:22px 26px 0;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.hd .br{font-size:10px;letter-spacing:.18em;color:var(--brand);font-weight:700;margin:0 0 3px}
+.hd h1{margin:0;font-size:20px;font-weight:700;letter-spacing:-.015em;color:var(--ink)}
+.hd .sb{margin:4px 0 0;font-size:12.5px;color:var(--mut)}
+.hd .rt{margin-left:auto}
+.tg{background:transparent;color:var(--ink2);border:1px solid var(--edge);border-radius:7px;
+ padding:6px 11px;font:inherit;font-size:12px;cursor:pointer}
+.tg:hover{background:var(--plane);color:var(--ink)}
+nav{max-width:1240px;margin:0 auto;padding:16px 26px 0;display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:transparent;border:0;border-bottom:2.5px solid transparent;color:var(--mut);
+ padding:10px 16px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+nav button:hover{color:var(--ink)}
+nav button:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+nav button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--brand)}
+section{padding-top:36px}
+h2{font-size:21px;margin:0 0 8px;letter-spacing:-.02em;font-weight:700}
+h3.sec{font-size:16px;margin:38px 0 6px;letter-spacing:-.015em}
+p.lead{margin:0 0 26px;color:var(--ink2);max-width:860px}
+.hidden{display:none!important}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:650;
+ border-radius:999px;padding:2px 9px;border:1px solid var(--ring);white-space:nowrap}
+.tag i{width:7px;height:7px;border-radius:50%;display:block}
+.t-real{color:var(--real)} .t-real i{background:var(--real)}
+.t-pres{color:var(--pres)} .t-pres i{background:var(--pres)}
+.t-nd{color:var(--nd)} .t-nd i{background:var(--nd)}
+.t-ok{color:var(--ok)} .t-ok i{background:var(--ok)}
+.t-aval{color:var(--aval)} .t-aval i{background:var(--aval)}
+.t-rever{color:var(--rever)} .t-rever i{background:var(--rever)}
+.tw{background:var(--surface);border:1px solid var(--ring);border-radius:12px;overflow:hidden;margin:22px 0;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:11px 15px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);font-weight:700;
+ border-bottom:1.5px solid var(--edge);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+.mono{font-variant-numeric:tabular-nums;font-size:12px;color:var(--ink2)}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.note{background:var(--surface);border:1px solid var(--ring);border-left:3px solid var(--aval);
+ border-radius:9px;padding:14px 18px;margin:20px 0;font-size:13px;color:var(--ink2)}
+.note strong{color:var(--ink)}
+.note.info{border-left-color:var(--real)}
+.note.pos{border-left-color:var(--ok)}
+.note.neg{border-left-color:var(--rever)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:20px 0}
+.kpi{background:var(--surface);border:1px solid var(--ring);border-radius:11px;padding:14px 16px}
+.kpi .kl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--mut)}
+.kpi .kv{font-size:22px;font-weight:750;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:4px}
+.kpi .kv small{font-size:13px;font-weight:650;color:var(--ink2)}
+.kpi .ks{font-size:11px;color:var(--mut);margin-top:3px;line-height:1.4}
+.kv.pos{color:var(--ok)} .kv.neg{color:var(--rever)}
+.bars{background:var(--surface);border:1px solid var(--ring);border-radius:12px;padding:18px 20px 14px;margin:14px 0}
+.bars .bt{font-size:12px;font-weight:750;margin-bottom:2px}
+.bars .bs{font-size:11px;color:var(--mut);margin-bottom:12px}
+.brow{display:grid;grid-template-columns:150px 1fr 110px;gap:10px;align-items:center;margin:0 0 7px}
+.brow .bl{font-size:11.5px;font-weight:650;color:var(--ink);text-align:right;line-height:1.25}
+.brow .tr{background:var(--plane);border-radius:4px;height:14px;position:relative;overflow:hidden}
+.brow .fl{position:absolute;top:2px;bottom:2px;border-radius:3px}
+.brow .bv{font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--ink2);white-space:nowrap}
+.brow.neg .bl{color:var(--rever)}
+@media(max-width:700px){.brow{grid-template-columns:110px 1fr 90px}}
+.shleg{display:flex;gap:18px;flex-wrap:wrap;font-size:11.5px;color:var(--mut);margin:11px 2px 0;align-items:center}
+.shleg .k{display:inline-flex;align-items:center;gap:6px}
+.shleg .k i{width:11px;height:3px;border-radius:2px;display:block}
+.org{background:var(--surface);border:1px solid var(--ring);border-radius:14px;padding:34px 26px 30px;overflow-x:auto;margin:14px 0}
+.org .ot{font-size:12px;font-weight:750;margin:0 0 18px;text-align:center}
+.org .os{font-size:11px;color:var(--mut);text-align:center;margin:-14px 0 18px}
+.row{display:flex;justify-content:center;gap:14px}
+.node{border:1px solid var(--edge);border-radius:10px;background:var(--plane);padding:13px 14px;text-align:center}
+.node .nm{font-weight:700;font-size:13px;line-height:1.3}
+.node .cn{font-size:10.5px;color:var(--mut);margin-top:3px;font-variant-numeric:tabular-nums}
+.node .pp{display:inline-block;margin-top:8px;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;
+ background:var(--ppbg);color:#fff;border-radius:6px;padding:2px 9px}
+.node .rs{font-size:9.5px;color:var(--mut);margin-top:4px;line-height:1.25;font-weight:600}
+.node.top{min-width:180px;max-width:262px}
+.node.apex{border:2px solid var(--brand);background:var(--surface);min-width:280px;padding:16px 18px}
+.node.apex .nm{font-size:15px;color:var(--brand);letter-spacing:-.01em}
+.node.apex .rs{font-size:11px}
+.node.dash{border-style:dashed}
+.stem{width:0;border-left:1.5px solid var(--edge);height:26px;margin:0 auto}
+.spine{height:1.5px;background:var(--edge);margin:0 auto}
+.leg{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;padding-top:18px;border-top:1px solid var(--line);
+ font-size:12px;color:var(--ink2);align-items:center}
+.sw{width:13px;height:13px;border-radius:3px;border:1px solid var(--ring);display:inline-block;vertical-align:-2px;margin-right:6px}
+.ogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:12px}
+@media(max-width:920px){.ogrid{grid-template-columns:1fr}}
+.sheet{background:var(--surface);border:1px solid var(--edge);border-radius:8px;overflow:hidden;overflow-x:auto;margin:14px 0}
+table.sh{border-collapse:collapse;width:100%;table-layout:fixed;font-size:12.5px;min-width:880px}
+table.sh th{background:var(--plane);font-size:10px;text-transform:uppercase;letter-spacing:.07em;
+ color:var(--mut);font-weight:700;text-align:left;padding:9px 11px;border-bottom:1px solid var(--edge);
+ border-right:1px solid var(--line);white-space:normal;line-height:1.35;vertical-align:bottom}
+table.sh th.a-r{text-align:right}
+table.sh th:last-child{border-right:0}
+table.sh td{padding:10px 11px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);
+ vertical-align:top;color:var(--ink2)}
+table.sh td:last-child{border-right:0}
+table.sh tbody tr:last-child td{border-bottom:0}
+table.sh tbody tr:hover td{background:var(--plane)}
+table.sh tr.tot td{background:var(--plane);font-weight:750;color:var(--ink);border-top:1.5px solid var(--edge)}
+td.c-op{font-weight:700;color:var(--ink);border-left:3px solid transparent;line-height:1.4}
+tr.k-pos td.c-op{border-left-color:var(--ok)}
+tr.k-apr td.c-op{border-left-color:var(--aval)}
+tr.k-neg td.c-op{border-left-color:var(--rever)}
+tr.k-nd td.c-op{border-left-color:var(--edge)}
+tr.k-r15 td.c-op{border-left-color:var(--real)}
+tr.k-r19 td.c-op{border-left-color:var(--pres)}
+td.c-op .nn{display:block;font-size:10.5px;font-weight:700;color:var(--mut);font-variant-numeric:tabular-nums;margin-bottom:2px}
+td.c-es{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink);font-size:11.5px;white-space:nowrap}
+td.c-es.pos{color:var(--ok)} td.c-es.neg{color:var(--rever)}
+.egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px;margin:18px 0}
+.ecard{background:var(--surface);border:1px solid var(--edge);border-radius:11px;overflow:hidden;display:flex;flex-direction:column}
+.ecard .eh{padding:12px 14px 10px;border-bottom:1px solid var(--line);background:var(--plane);display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.ecard .en{font-size:13.5px;font-weight:750;letter-spacing:-.01em}
+.ecard .ec{font-size:10px;color:var(--mut);font-variant-numeric:tabular-nums}
+.ecard .eb{margin-left:auto;display:flex;gap:5px;flex-wrap:wrap}
+.ecard table.et{font-size:12px;width:100%;border-collapse:collapse}
+.ecard table.et td{padding:6.5px 14px;border-bottom:1px solid var(--line)}
+.ecard table.et td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:650;color:var(--ink);white-space:nowrap}
+.ecard table.et tr:last-child td{border-bottom:0}
+.ecard table.et td .sub{font-size:10px;color:var(--mut);display:block;font-weight:400}
+.ecard .ei{padding:10px 14px 12px;border-top:1px solid var(--line);font-size:11.3px;color:var(--ink2);line-height:1.55}
+.ecard .ei b{color:var(--ink)}
+.ecard .ei .it{font-size:9px;text-transform:uppercase;letter-spacing:.09em;font-weight:800;color:var(--mut);display:block;margin-bottom:4px}
+.v-pos{color:var(--ok)!important} .v-neg{color:var(--rever)!important}
+.tl{display:flex;gap:0;margin:18px 0;overflow-x:auto}
+.tl .st{flex:1;min-width:190px;position:relative;padding:0 14px 0 0}
+.tl .st:not(:last-child):after{content:"";position:absolute;right:2px;top:17px;width:10px;height:10px;
+ border-top:2px solid var(--edge);border-right:2px solid var(--edge);transform:rotate(45deg)}
+.tl .stb{background:var(--surface);border:1px solid var(--edge);border-radius:10px;padding:12px 14px;height:100%}
+.tl .sy{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.tl .sv{font-size:13px;font-weight:750;margin:3px 0 4px}
+.tl .sd{font-size:11.3px;color:var(--ink2);line-height:1.5}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:12px;margin:18px 0}
+@media(max-width:960px){.cgrid{grid-template-columns:1fr}}
+.ccard{background:var(--surface);border:1px solid var(--edge);border-radius:11px;overflow:hidden}
+.ccard .ch{padding:12px 16px;background:var(--plane);border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.ccard .ct{font-size:13.5px;font-weight:750}
+.ccard .cs{font-size:11px;color:var(--mut);margin-top:2px;flex-basis:100%}
+.ccard .ch .tag{margin-left:auto}
+.ccard dl{margin:0;display:grid;grid-template-columns:132px 1fr;gap:0 14px;font-size:12px;padding:6px 16px 12px}
+.ccard dt{color:var(--mut);font-weight:700;padding:6px 0;border-bottom:1px solid var(--line);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em}
+.ccard dd{margin:0;color:var(--ink2);padding:6px 0;border-bottom:1px solid var(--line)}
+.ccard dt:last-of-type,.ccard dd:last-of-type{border-bottom:0}
+.ccard dd b{color:var(--ink)}
+.base{background:var(--surface);border:1px solid var(--ring);border-radius:13px;padding:18px 22px 20px;margin:26px 0 0}
+.base h3{margin:0 0 4px;font-size:14px;letter-spacing:-.01em}
+.base .sub{font-size:11.5px;color:var(--mut);margin:0 0 14px}
+.base dl{margin:0;display:grid;grid-template-columns:196px 1fr;gap:0 22px;font-size:12.5px}
+.base dt{color:var(--ink);font-weight:700;padding:7px 0;border-top:1px solid var(--line)}
+.base dd{margin:0;color:var(--ink2);padding:7px 0;border-top:1px solid var(--line)}
+.base dt:first-of-type,.base dd:first-of-type{border-top:0}
+@media(max-width:760px){.base dl{grid-template-columns:1fr}.base dd{padding-top:0;border-top:0}}
+ol.pend{margin:8px 0 0;padding-left:20px;font-size:13px;color:var(--ink2)}
+ol.pend li{margin-bottom:8px;line-height:1.55}
+ol.pend b{color:var(--ink)}
+.foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--mut)}
+.foot b{color:var(--ink2)}
+blockquote.q{margin:0;padding:0;font-style:italic}
+@media(max-width:1000px){table.sh{table-layout:auto;font-size:12px}}
+</style>
+<header>
+ <div class="hd">
+  <div><p class="br">PROJETO ANOTHER HOUSE</p><h1>Incorporação da CNP, caracterização contábil e efeitos fiscais</h1>
+   <p class="sb">Posição 28.08.2026 · Acordo de 20.10.2025 · Ofício BACEN 31070/2026 · calls e e-mails de ago/2026 · planilha Molina de 21.05.2025</p></div>
+  <div class="rt"><button class="tg" id="tg" type="button">Modo escuro</button></div>
+ </div>
+ <nav id="nav" role="tablist"></nav>
+</header>
+<div class="wrap">
+ <section id="t-vg"></section>
+ <section id="t-est" class="hidden"></section>
+ <section id="t-cpc" class="hidden"></section>
+ <section id="t-ctb" class="hidden"></section>
+ <section id="t-fis" class="hidden"></section>
+ <section id="t-mol" class="hidden"></section>
+ <section id="t-src" class="hidden"></section>
+ <p class="foot" id="foot"></p>
+</div>
+<script id="p" type="application/json">
+{
+ "vg":{
+  "kpis":[
+   {"l":"EV Embracon · 31.12.2024","v":"R$ 5.132,9 mi","s":"avaliação mutuamente acordada no Acordo; definitiva e irrevisável"},
+   {"l":"EV CNP Consórcio · 31.12.2024","v":"R$ 821,9 mi","s":"define os 13,8% da relação de troca na incorporação"},
+   {"l":"Cash out (etapa 2)","v":"R$ 1,2 bi","s":"+ IPCA desde 31.03.2025 + correção sobre R$ 360 mi; earn-out de até R$ 680 mi"},
+   {"l":"Resultado final","v":"60% × 40%","s":"famílias (Savian 30% + JVFJ 30%) × grupo CNP"}
+  ],
+  "tl":[
+   {"y":"mai/2025","t":"Estruturação inicial","d":"Deck SF (estrutura em 2 passos, CNP com 20%) e planilha do Molina (secundária de 20% por R$ 1,5 bi; holdings × PFs)."},
+   {"y":"20.10.2025","t":"Assinatura","d":"Acordo de Investimento, Compra e Venda e Outras Avenças + AGEs. Estrutura final: incorporação (13,8%) + cash out até 40%."},
+   {"y":"13–17.08.2026","t":"Aprovação BACEN","d":"Despacho DEORF 13.08; Ofício 31070/2026-BCB/DEORF/GTCUR comunica deferimento: incorporação plena, alteração de controle e aumento de capital."},
+   {"y":"17–26.08.2026","t":"Controvérsia contábil","d":"Call Deloitte (CPC 19 / joint operation) · e-mails da Malu (comparativo CPC 15 × 19) · call interno SF (teses e action items)."},
+   {"y":"Fechamento","t":"Etapas 1 + 2 simultâneas","d":"Data Limite ≈ 20.01.2027. CPs pendentes: eficácia BACEN, CADE, Contrato de Distribuição, Metas Operacionais Críticas, BRB."},
+   {"y":"Futuro","t":"Passo F","d":"Segunda secundária para a CNP adquirir o controle (escopo e preço indefinidos). É onde a discussão do custo fiscal se materializa."}
+  ]
+ },
+ "est":{
+  "etapas":[
+   {"k":"k-r15","n":"ETAPA 1","t":"Incorporação (art. 227 LSA)","d":"Embracon incorpora a CNP Consórcio com versão da totalidade do patrimônio e extinção da incorporada (formato aprovado pelo BACEN — não é cisão). Emite ações ordinárias conferindo 13,8% do capital diluído às Partes CNP. Laudo do aumento de capital a valor patrimonial contábil (art. 224 LSA, balanço ≤ 60 dias).","v":"EV CNP R$ 821,9 mi ÷ (821,9 + 5.132,9) = 13,8% · Resultado: Savian 43,10% + JVFJ 43,10% + CNP 13,80%"},
+   {"k":"k-r15","n":"ETAPA 2","t":"Compra e venda — cash out","d":"Ato seguinte e interdependente: CNP Participações compra de Savian/JVFJ (50/50) as ações necessárias para as Partes CNP atingirem 40% (~26,2% adicionais). Ajustes preliminar e final por caixa líquido (multiplicadores 40%/60%).","v":"R$ 1,2 bi + IPCA desde 31.03.2025 + correção sobre R$ 360 mi (60% do caixa líquido de referência CNP, R$ 600 mi) · simulação Anexo 3.2.3 (30.06.2025): R$ 1.445,2 mi"},
+   {"k":"k-apr","n":"EARN-OUT","t":"Parcela Contingente","d":"Exclusiva dos vendedores (50/50), por metas de EBITDA acumulado (definição contratual própria, base normativa congelada na assinatura; Reforma Tributária neutralizada) e de Taxa Futura Bruta, em janelas de 3 + 2 anos. Abaixo de 60% da meta, extingue-se; teto com média ≥ 113,3%.","v":"até R$ 680 mi"},
+   {"k":"k-nd","n":"PASSO F","t":"Alienação futura do controle","d":"Intenção de segunda secundária em que a CNP adquire o controle (100%? incerto). Sem preço ou data — a simulação usará sensibilidade de preço. É o momento em que o custo fiscal (\"gordão\" × \"magrinho\") produz efeito.","v":"preço a sensibilizar"}
+  ],
+  "div":[
+   {"t":"% da CNP na incorporação","a":"20% (deck SF, mai/2025)","b":"13,8% — resultado do valuation relativo (Acordo)"},
+   {"t":"Formato da 2ª perna","a":"PFs vendem 25% das holdings (deck SF); é o que a planilha do Molina compara","b":"Venda direta pelas holdings Savian/JVFJ de ações da Embracon — a contraparte \"não topou vender na física, tem que ser na jurídica\" (Molina)"},
+   {"t":"Preço da secundária","a":"20% por R$ 1,5 bi; earn-out \"300–800 mi a confirmar\" (planilha Molina)","b":"~26,2% por R$ 1,2 bi + correções; earn-out ≤ R$ 680 mi (Acordo)"},
+   {"t":"Rótulo da operação","a":"\"Incorporação de acervo líquido / cisão-incorporação\" (uso interno)","b":"Incorporação plena de sociedade — totalidade do patrimônio + extinção (Ofício BACEN; Acordo). As análises fiscais devem partir da incorporação plena"},
+   {"t":"Split ações × caixa","a":"14,7% + 25,3%, caixa 1.600 (ilustrativos DTT / razonetes Malu)","b":"13,8% + ~26,2%, R$ 1,2 bi (Acordo) — os ilustrativos não são os números do deal"},
+   {"t":"Embracon Franchising","a":"CNP com 25% indireto e direito a 40% (deck)","b":"Reestruturação pós-fechamento preservando 60/40 (Cl. 10.8); divergência interna do deck sobre as holdings titulares (GSJ/JUVAFE × Savian/JVFJ)"}
+  ]
+ },
+ "cpc":{
+  "tab":[
+   {"d":"Geral","c15":"Aquisição de controle do negócio da CNP pela Embracon. Laudo PPA com avaliação do PL da CNP a valor justo. PL da Embracon não é reavaliado.","c19":"Comparável à participação em um consórcio: os grupos se juntam num empreendimento conjunto em que ambos têm controle. Laudo para reavaliação a VJ dos ativos e passivos da CNP e da Embracon."},
+   {"d":"Embracon","c15":"Reconhece 100% dos ativos identificáveis e passivos assumidos da CNP a valor justo, pelo método de aquisição.","c19":"Reconhece 100% dos ativos e passivos da CNP a valor justo e ainda reavalia os próprios ativos e passivos (AVJ \"espontâneo\")."},
+   {"d":"Savian / JVFJ (contábil)","c15":"Reflexo por MEP: 60% × (PL Embracon a valor contábil + PL CNP a VJ). Possível não registrar passivo fiscal diferido.","c19":"Reconhecimento direto de 60% do VJ dos ativos e passivos da JO: 60% × (PL Embracon a VJ + PL CNP a VJ). Registro de passivo fiscal diferido."},
+   {"d":"Grupo CNP (contábil)","c15":"Reflexo por MEP de 40% — sem trânsito em resultado (exatamente o que a CNP não quer).","c19":"Reconhecimento direto de 40% do VJ — com ganho no resultado da CNP."},
+   {"d":"Fiscal — holdings","c15":"Argumentos de neutralidade: reflexo do PL incorporado não tributado nem no reconhecimento nem na alienação (não incidência, não diferimento). Não livre de risco — limitado ao reflexo do VJ do PL da CNP; risco de requalificação como AVJ Reflexo.","c19":"Ganho de AVJ com tributação apenas diferida até a realização (Embracon) ou a alienação da participação (holdings). Fica \"carimbado\" a 34% de IRPJ/CSLL, com controle em subconta obrigatório (arts. 13–14, Lei 12.973/2014) para evitar tributação imediata na incorporação."}
+  ]
+ },
+ "ctb":{
+  "cnp":[
+   {"n":"Baixa do investimento pré-existente","v":"(300)"},
+   {"n":"Caixa entregue no cash out","v":"(1.600)"},
+   {"n":"Joint Operation reconhecida a VJ (40% da cia combinada)","v":"2.355"},
+   {"n":"Ganho na troca de ações (FMV 866 − custo 300)","v":"+566 em resultado"},
+   {"n":"Perda no sobrepreço da parcela em caixa (1.600 − 1.490)","v":"(110) em resultado"},
+   {"n":"Mais-valia alocada à carteira de clientes","v":"455"},
+   {"n":"Passivo fiscal diferido (34% sobre a mais-valia)","v":"(155)"}
+  ],
+  "vend":[
+   {"n":"Baixa do investimento histórico na Embracon","v":"(178)"},
+   {"n":"Caixa recebido","v":"1.600"},
+   {"n":"Ganho na venda em espécie","v":"+1.555 em resultado"},
+   {"n":"Ganho na troca de ações","v":"+729 em resultado"},
+   {"n":"Remensuração a VJ dos 60% retidos (107 → 3.533)","v":"+2.671 em resultado"},
+   {"n":"Ganho total reconhecido no resultado","v":"4.955"},
+   {"n":"Passivo fiscal diferido (34% × 3.426)","v":"(1.165)"}
+  ],
+  "comp":[{"n":"Venda em espécie","v":1555},{"n":"Troca de ações","v":729},{"n":"Remensuração 60% retidos","v":2671}]
+ },
+ "fis":{
+  "kpis":[
+   {"l":"Carimbo do AVJ no CPC 19","v":"34%","s":"IRPJ/CSLL diferidos em subconta, devidos na realização ou na alienação"},
+   {"l":"Diferenças temporárias CPC 47","v":"R$ 1,20 bi","s":"receita diferida R$ 533,7 mi + comissões diferidas R$ 666,4 mi (Embracon, LALUR 12/2024)"},
+   {"l":"Prejuízo fiscal Embracon","v":"R$ 32,4 mi","s":"IRPJ e CSLL (12/2024) — atributo relevante ao PPA e ao preço"},
+   {"l":"Indenização tributária","v":"6 anos","s":"caps R$ 200 mi (CNP) / R$ 300 mi (famílias); Perdas ISS sem limite"}
+  ],
+  "jur":[
+   {"a":"1402-004.537","d":"11.03.2020","c":"WTorre","r":"—","dec":"Art. 33, §2º, DL 1.598/77 como exclusão definitiva: o ganho neutralizado \"dá custo\". Precedente central da tese do custo \"gordão\".","k":"k-pos"},
+   {"a":"1101-001.404","d":"09.10.2024","c":"Litela","r":"ORA","dec":"Sem tributação imediata, mas com diferimento: tributa quando o valor migra de ORA para a DRE.","k":"k-apr"},
+   {"a":"1401-007.055","d":"16.07.2024","c":"Litel","r":"ORA","dec":"Mesma linha: diferimento; subconta \"possível\".","k":"k-apr"},
+   {"a":"1101-001.409","d":"18.11.2024","c":"CPFL","r":"Reserva de capital","dec":"Sem tributação imediata enquanto o ganho não transita pelo resultado.","k":"k-apr"}
+  ]
+ },
+ "mol":{
+  "kpis":[
+   {"l":"Preço simulado (20%)","v":"R$ 1,5 bi","s":"premissa de mai/2025 — superada pelo Acordo (26,2% por R$ 1,2 bi)"},
+   {"l":"Tributos — venda pelas holdings","v":"R$ 497,9 mi","s":"IRPJ/CSLL 34% sobre GK de R$ 732,2 mi em cada holding"},
+   {"l":"Tributos — venda pelas PFs","v":"R$ 323,5 mi","s":"IRPF progressivo 15%–22,5% (Lei 13.259/2016); alíquota efetiva ~22,1%"},
+   {"l":"Ajuste de preço calculado","v":"R$ 132,1 mi","s":"50% da economia de R$ 174,4 mi, com gross-up de 34%"}
+  ],
+  "cen1":[
+   {"n":"Cia. Savian de Participações","p":750000000,"c":17838957.31,"gk":732161042.69,"t":248934754.52},
+   {"n":"Cia. JVFJ de Participações","p":750000000,"c":17838957.31,"gk":732161042.69,"t":248934754.52}
+  ],
+  "cen2":[
+   {"n":"Guido (90% Savian)","p":675000000,"c":16055061.58,"gk":658944938.42,"t":147137611.15},
+   {"n":"Daniel · Gabriel · Lucas · André · Matheus (2% cada)","p":75000000,"c":1783895.73,"gk":73216104.27,"t":12768220.85,"obs":"5 × R$ 2,55 mi"},
+   {"n":"Juarez (usufrutuário de 100% da JVFJ)","p":750000000,"c":17838957.31,"gk":732161042.69,"t":163611234.61}
+  ],
+  "bars":[
+   {"n":"Holdings (34%)","v":497869509},
+   {"n":"Pessoas físicas (IRPF)","v":323517067},
+   {"n":"Economia da via PF","v":174352442}
+  ],
+  "emp":[
+   {"n":"Embracon Adm. de Consórcio","r":"Lucro Real","cls":"t-real","m":[["Patrimônio líquido 12/2024","R$ 178,4 mi"],["Ativos totais","R$ 896,8 mi"],["Prejuízo fiscal (IRPJ = CSLL)","R$ 32,35 mi"],["Diferenças temporárias CPC 47","R$ 1.200,1 mi"],["Provisões indedutíveis","R$ 18,9 mi"]],"o":"Receita de serviços diferida (R$ 533,7 mi) e comissões diferidas (R$ 666,4 mi) — estoque central para o IR diferido na combinação."},
+   {"n":"Cia. Savian de Participações","r":"Lucro Presumido","cls":"t-pres","m":[["Patrimônio líquido","R$ 89,3 mi"],["Participações societárias","R$ 89,2 mi"]],"o":"Holding pura; valor contábil da Embracon = R$ 89,19 mi (metade do PL)."},
+   {"n":"Cia. GSJ de Participações","r":"Lucro Presumido","cls":"t-pres","m":[["Patrimônio líquido","R$ 108,5 mi"],["Participações societárias","R$ 64,3 mi"],["Imobilizado","R$ 22,9 mi"]],"o":"Eixo paralelo (fora do perímetro direto da operação)."},
+   {"n":"Embrafisa Consultoria","r":"Lucro Presumido","cls":"t-pres","m":[["Patrimônio líquido","R$ 100,9 mi"],["Investimentos","R$ 46,8 mi"],["Imobilizado","R$ 61,1 mi"]],"o":"Lucro líquido 2024 de R$ 52,8 mi (DRE embutida na planilha)."},
+   {"n":"Dourada Comercial e Agropecuária","r":"Lucro Real","cls":"t-real","m":[["Patrimônio líquido","R$ 10,1 mi"],["Prejuízo fiscal","R$ 956 mil"],["Prejuízos acumulados","−R$ 8,7 mi"]],"o":"Fora do perímetro; reserva de reavaliação de R$ 4,6 mi."},
+   {"n":"Embracon Franchising","r":"Lucro Presumido","cls":"t-pres","m":[["Patrimônio líquido","R$ 1,15 mi"]],"o":"Objeto de reestruturação pós-fechamento (Cl. 10.8 do Acordo)."},
+   {"n":"CNP Consórcio (lado CNP)","r":"Dados públicos","cls":"t-nd","m":[["Patrimônio líquido 2024","R$ 303,2 mi"],["Lucro líquido 2024","R$ 40,6 mi"],["Receita de serviços","R$ 272,6 mi"]],"o":"DFs auditadas KPMG (Acordo, Anexo 7.2.5). A aba \"CNP Seguros\" da planilha usa apenas informação coletada da internet."}
+  ]
+ },
+ "src":{
+  "fontes":[
+   {"doc":"Acordo de Investimento, Compra e Venda e Outras Avenças (989 p., assinado)","dt":"20.10.2025","s":"Estrutura contratada: incorporação 13,8% + cash out R$ 1,2 bi + earn-out ≤ R$ 680 mi; governança e vetos; laudo a valor contábil; \"combinação de negócios\" nos considerandos"},
+   {"doc":"Ofício 31070/2026-BCB/DEORF/GTCUR (BACEN → Embracon)","dt":"17.08.2026","s":"Aprovação regulatória: incorporação plena (totalidade do patrimônio + extinção), alteração de controle e aumento de capital; eficácia condicionada"},
+   {"doc":"Deck SF — Projeto Another House, Apresentação Estrutura","dt":"12–13.05.2025","s":"Estrutura em 2 passos (versão inicial: 20% + venda de 25% das holdings pelas PFs); organogramas; alternativa de incorporação de ações"},
+   {"doc":"Planilha Molina — Embracon_simulação tributária (xlsx)","dt":"21.05.2025","s":"Simulação da secundária de 20% por R$ 1,5 bi: holdings (R$ 497,9 mi) × PFs (R$ 323,5 mi); ajuste de preço R$ 132,1 mi; balanços 12/2024 do grupo"},
+   {"doc":"Call Deloitte × SF (anotações)","dt":"17.08.2026","s":"Posição DTT: CPC 19 / joint operation por \"co-controle\"; AVJ em resultado; ilustrativos 300/178/2.355/3.426; contestação SF"},
+   {"doc":"E-mails Malu ↔ Renato (cadeia \"Incorporação da CNP — comparativo CPC 15 x CPC 19\")","dt":"18–21.08.2026","s":"Tabela comparativa conceitual; teses de neutralidade × diferimento; pedido de aprimorar a planilha segregando variação de % × reflexo"},
+   {"doc":"PPT \"Embracon — Reflexo MV Incorporação CPC 15\" (Malu)","dt":"ago/2026","s":"Mapa das teses (sucessão universal; alienação; ganho não realizado) e dos 4 acórdãos CARF"},
+   {"doc":"Razonetes da Malu (3 imagens — draft)","dt":"ago/2026","s":"Modelagem contábil do cenário CPC 19 com ilustrativos DTT: comprador (JO 2.355; DTL 155) e vendedor (ganho 4.955; DTL 1.165)"},
+   {"doc":"Call interno SF — Estruturação Societária Embracon e CNP (51 min)","dt":"26.08.2026","s":"Briefing completo; 3 caminhos fiscais; decisão dos 2 cenários (gordão × magrinho); action items da nova planilha e do deck"},
+   {"doc":"Obra \"O ágio e a mais-valia de ativos na Lei nº 12.973/2014\" (cap. 2, pp. 43–101)","dt":"—","s":"Regime dos arts. 20–22 DL 1.598/77; asset deal fora do regime (ágio indedutível; compra vantajosa 1/60); laudo 13 meses; subcontas"}
+  ],
+  "pend":[
+   "<b>Enquadramento CPC 15 × CPC 19</b> — decisão do auditor (Deloitte); aguarda fundamentação do \"Ricardo da DTT\" e reunião com advogados da CNP + \"Diego\"; premissa de co-controle contestada pela SF; não trava o closing.",
+   "<b>Conta de PL da contrapartida da mais-valia</b> (ORA × reserva de capital) — CPC não define; Deloitte não respondeu; a escolha alimenta ou esvazia o fundamento dos acórdãos de 2024.",
+   "<b>Natureza fiscal do excedente</b> — variação de MEP (diferido × custo definitivo) × AVJ espontâneo; RC: \"algo entre valor justo e MEP\".",
+   "<b>Preço e escopo do passo F</b> (controle ou 100%?) — inexistentes; construir sensibilidade de preço.",
+   "<b>Aproveitamento dos arts. 20–22 pela Embracon</b> dado o formato de incorporação sem aquisição prévia de participação (risco \"asset deal\"); ágio fiscal da CNP Holding na parcela em dinheiro.",
+   "<b>Venda pela pessoa física (\"subir pra física\")</b> — adiada; incompatível com ganho diferido se prevalecer AVJ/CPC 19.",
+   "<b>Natureza dos R$ 1,2 bi</b> para fins de reflexo contábil/fiscal; validação do valor justo assumido nas premissas; conferência de possíveis erros na planilha do Molina.",
+   "<b>Rendimentos das aplicações financeiras do acervo incorporado</b> — natureza e tributação não tratadas em nenhum documento analisado; incluir na pauta.",
+   "<b>Condições pendentes</b> — eficácia BACEN (fechamento, mapa STA/Sisorf, laudo dos peritos, migração de dados) e CPs contratuais (CADE, Contrato de Distribuição, Metas Operacionais Críticas, consentimento BRB).",
+   "<b>Lacunas documentais</b> — tabelas de metas do earn-out ilegíveis (imagem), estatuto com capital em branco, SHA minuta de 2026, autoria do artigo doutrinário, divergência Franchising, 0,01% residual das PFs."
+  ],
+  "glos":[
+   ["Projeto Another House","Codinome da operação Embracon × CNP"],
+   ["Incorporação (art. 227 LSA)","Etapa 1: versão da totalidade do patrimônio da CNP + extinção; emite 13,8% às Partes CNP"],
+   ["Cash out","Etapa 2: compra de ~26,2% por R$ 1,2 bi corrigido, das holdings 50/50, até a CNP atingir 40%"],
+   ["Passo F","Futura secundária para a CNP adquirir o controle; sem preço/data"],
+   ["PPA","Purchase Price Allocation — alocação do preço a valor justo (laudo)"],
+   ["Mais-valia (MV)","Diferença entre VJ e valor contábil dos ativos/passivos identificáveis; na incorporação, \"gruda\" nos ativos de origem"],
+   ["AVJ / AVJ Reflexo","Ajuste a valor justo (arts. 13–14, Lei 12.973/2014 — diferido via subconta) / parcela do MEP das controladoras referente ao AVJ da investida"],
+   ["\"O 33\"","Art. 33, §2º, DL 1.598/77 — neutralização do ganho por variação de participação (exclusão definitiva × diferimento)"],
+   ["\"Custo gordão\" × \"magrinho\"","Cenários da alienação futura: custo com a mais-valia (nunca tributa) × custo original (diferimento)"],
+   ["ORA","Outros Resultados Abrangentes; a reclassificação ORA→DRE fundamenta a tributação nos acórdãos de 2024"],
+   ["Joint operation / co-controle","Qualificação defendida pela Deloitte (controle compartilhado por vetos); contestada pela SF"],
+   ["Subconta","Controle exigido pela Lei 12.973/2014 para diferimento/aproveitamento fiscal"],
+   ["Asset deal × share deal","Combinação sem × com aquisição de participação societária; asset deal fora dos arts. 20/22 (ágio indedutível)"],
+   ["Compra vantajosa","VJ dos ativos líquidos > contraprestação; tributável (após evento societário, parcelas mínimas de 1/60)"],
+   ["Operação única","Tese de que incorporação + cash out simultâneos formam um só negócio → GK das holdings a custo antigo (julgado da Amanda)"],
+   ["Taxa Futura Bruta","Taxa de administração a receber das cotas ativas (NewCon) — métrica do earn-out e das opções"],
+   ["Molina","José Luzia Molina, contador/consultor da Embracon; autor da planilha e testemunha do Acordo"],
+   ["RC / Malu","Renato Coelho / Maria Luiza Assad (Stocche Forbes)"],
+   ["DTT","Deloitte — auditor da Embracon (Mayara, Pammela, Felipe Argemi, \"Ricardo\")"]
+  ]
+ }
+}
+</script>
+<script>
+const D=JSON.parse(document.getElementById('p').textContent);
+const E=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const F0=n=>n==null?'—':n.toLocaleString('pt-BR',{maximumFractionDigits:0});
+const FM=n=>n==null?'—':(Math.abs(n)>=1e6?(n/1e6).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+' mi':(n/1e3).toLocaleString('pt-BR',{maximumFractionDigits:0})+' mil');
+const kpis=a=>`<div class="kpis">${a.map(k=>`<div class="kpi"><div class="kl">${E(k.l)}</div><div class="kv">${E(k.v)}</div><div class="ks">${E(k.s)}</div></div>`).join('')}</div>`;
+function bars(title,sub,rows,color,fmt){
+ const mx=Math.max(...rows.map(r=>Math.abs(r.v)));
+ return `<div class="bars"><div class="bt">${title}</div><div class="bs">${sub}</div>
+ ${rows.map(r=>`<div class="brow${r.v<0?' neg':''}"><div class="bl">${E(r.n)}</div>
+  <div class="tr"><div class="fl" style="left:0;width:${Math.max(1.2,Math.abs(r.v)/mx*100)}%;background:${r.v<0?'var(--rever)':(r.c||color)}"></div></div>
+  <div class="bv">${fmt(r.v)}</div></div>`).join('')}</div>`;}
+const node=(o)=>`<div class="node ${o.cls||''}"><div class="nm">${o.nm}</div>${o.cn?`<div class="cn">${o.cn}</div>`:''}${o.pp?`<div><span class="pp">${o.pp}</span></div>`:''}${o.rs?`<div class="rs">${o.rs}</div>`:''}</div>`;
+function tree(title,sub,parents,apex){
+ const W=Math.min(parents.length*180+(parents.length-1)*14,640);
+ return `<div class="org"><div class="ot">${title}</div>${sub?`<div class="os">${sub}</div>`:''}
+ <div class="row">${parents.map(p=>node({...p,cls:(p.cls||'')+' top'})).join('')}</div>
+ <div class="stem"></div><div class="spine" style="width:${W}px;max-width:100%"></div><div class="stem"></div>
+ <div class="row">${node({...apex,cls:'apex'})}</div></div>`;}
+
+function renderVg(){document.getElementById('t-vg').innerHTML=`
+ <h2>1. Visão geral da operação</h2>
+ <p class="lead">Combinação dos negócios de administração de consórcio dos grupos Embracon (famílias Savian e Silva/Dutra) e CNP Assurances. A Embracon incorpora a CNP Consórcio e o grupo CNP fica com 40% da companhia combinada — 13,8% recebidos em ações na incorporação e ~26,2% comprados em dinheiro das holdings. Fontes: Acordo de 20.10.2025, Ofício BACEN 31070/2026 e calls/e-mails de agosto/2026.</p>
+ ${kpis(D.vg.kpis)}
+ <div class="tl">${D.vg.tl.map(s=>`<div class="st"><div class="stb"><div class="sy">${E(s.y)}</div><div class="sv">${E(s.t)}</div><div class="sd">${s.d}</div></div></div>`).join('')}</div>
+ <div class="note info"><strong>A operação em essência.</strong> Juridicamente, uma incorporação de sociedade lavrada a valor patrimonial contábil (laudo art. 224 LSA) seguida de compra e venda de ações — o contrato não menciona CPC 15, CPC 19, PPA, mais-valia ou goodwill. Contabilmente, porém, a essência é uma combinação: a caracterização (CPC 15 × CPC 19) ficou inteiramente para a implementação, e é dela que decorre todo o tratamento contábil e fiscal.</div>
+ <div class="note"><strong>A controvérsia em síntese.</strong> A Deloitte (auditora da Embracon, a quem cabe a definição) propõe tratar a operação como <em>joint operation</em> (CPC 19), com reavaliação a valor justo dos patrimônios da CNP <em>e</em> da Embracon lançada em resultado. A Stocche Forbes sustenta combinação de negócios (CPC 15): veto não é controle conjunto, as famílias seguem com 60% e o próprio contrato fala em "combinação de negócios". A premissa escolhida "vai carregar o tratamento tributário" (RC).</div>
+ <div class="note neg"><strong>Por que importa.</strong> No CPC 19 o ganho de AVJ fica "carimbado" a 34% de IRPJ/CSLL com tributação diferida em subconta — "cai a tese do MEP", o passivo diferido entra no preço e "nunca mais vamos conseguir liquidar as holdings para vender pela PF". No CPC 15 há argumentos para neutralidade definitiva do reflexo nas holdings (linha WTorre), com a mais-valia compondo custo — o cenário "custo gordão" na alienação futura.</div>
+ <div class="base"><h3>Status e premissas de leitura</h3><p class="sub">posição em 28.08.2026</p><dl>
+  <dt>Assinatura</dt><dd>20.10.2025 — Acordo de Investimento, Compra e Venda e Outras Avenças + AGEs</dd>
+  <dt>Aprovação BACEN</dt><dd>Deferida (Ofício 31070/2026, de 17.08.2026); eficácia condicionada a evidências do fechamento, mapa de capital (STA/Sisorf), laudo dos peritos e migração de dados</dd>
+  <dt>Fechamento</dt><dd>Pendente; etapas 1 e 2 simultâneas e interdependentes; Data Limite ≈ 20.01.2027</dd>
+  <dt>Quem define o CPC</dt><dd>O auditor da Embracon (Deloitte). "Não atrapalha o closing, mas temos que aceitar isso" (Rafael Andrade)</dd>
+  <dt>Escalas dos números</dt><dd>Valores contratuais (R$) × ilustrativos da DTT/razonetes (base 178/300/5.888) × planilha Molina (premissas de mai/2025). Não são comparáveis entre si — cada aba indica a base usada</dd>
+ </dl></div>`;}
+
+function renderEst(){const d=D.est;document.getElementById('t-est').innerHTML=`
+ <h2>2. Operação e estrutura societária</h2>
+ <p class="lead">Estrutura antes do fechamento, após a incorporação (etapa 1) e na configuração final (pós cash out), com a mecânica de cada etapa, a governança contratada — base fática da discussão de controle — e a reconciliação entre as versões dos documentos.</p>
+ <div class="ogrid">
+ ${tree('Antes do fechamento — lado Embracon','participações na Embracon Adm. de Consórcio S.A.',[
+  {nm:'Cia. Savian de Participações',cn:'família Savian · Guido 90%',pp:'49,99%'},
+  {nm:'Cia. JVFJ de Participações',cn:'família Silva/Dutra · usufruto Juarez',pp:'49,99%'},
+  {nm:'Pessoas físicas',cn:'residual',pp:'0,01%',cls:'dash'}],
+  {nm:'Embracon Adm. de Consórcio S.A.',cn:'CNPJ 58.113.812/0001-23 · PL 12/2024 R$ 178,4 mi',rs:'EV acordado: R$ 5.132,9 mi'})}
+ ${tree('Antes do fechamento — lado CNP','participações na CNP Consórcio S.A.',[
+  {nm:'CNP Assurances S.A.',cn:'França',pp:'50,75%'},
+  {nm:'CNP Assurances Participações',cn:'Brasil',pp:'48,25%'},
+  {nm:'CNP Latam Holding',cn:'Brasil',pp:'1%'}],
+  {nm:'CNP Consórcio S.A.',cn:'CNPJ 05.349.595/0001-09 · PL 2024 R$ 303,2 mi',rs:'EV acordado: R$ 821,9 mi · será incorporada e extinta'})}
+ ${tree('Após a etapa 1 — incorporação','CNP Consórcio extinta; acervo total vertido; emissão de 13,8% às Partes CNP',[
+  {nm:'Cia. Savian',pp:'43,10%'},
+  {nm:'Cia. JVFJ',pp:'43,10%'},
+  {nm:'Partes CNP',cn:'ações novas da incorporação',pp:'13,80%'}],
+  {nm:'Embracon (combinada)',rs:'relação de troca: 821,9 ÷ (821,9 + 5.132,9) = 13,8%'})}
+ ${tree('Estrutura final — pós cash out','CNP compra ~26,2% das holdings (50/50) por R$ 1,2 bi corrigido',[
+  {nm:'Cia. Savian',pp:'30%'},
+  {nm:'Cia. JVFJ',pp:'30%'},
+  {nm:'Partes CNP',pp:'40%'}],
+  {nm:'Embracon (combinada)',rs:'famílias 60% × grupo CNP 40%'})}
+ </div>
+ <div class="shleg"><span class="k"><i style="background:var(--edge)"></i>borda tracejada = dado a confirmar</span><span class="k"><i style="background:var(--ppbg)"></i>pill = % no capital</span></div>
+ <h3 class="sec">Mecânica das etapas</h3>
+ <div class="sheet"><table class="sh"><colgroup><col style="width:16%"><col style="width:44%"><col style="width:40%"></colgroup>
+  <thead><tr><th>Etapa</th><th>O que ocorre</th><th>Números-chave</th></tr></thead><tbody>
+  ${d.etapas.map(e=>`<tr class="${e.k}"><td class="c-op"><span class="nn">${E(e.n)}</span>${E(e.t)}</td><td>${e.d}</td><td>${e.v}</td></tr>`).join('')}
+ </tbody></table></div>
+ <h3 class="sec">Governança pós-fechamento</h3>
+ <p class="lead" style="margin-bottom:14px">É este desenho que sustenta o debate: controle das famílias com minoritário relevante (CPC 15) × controle conjunto (CPC 19).</p>
+ <div class="cgrid">
+  <div class="ccard"><div class="ch"><div class="ct">Órgãos e indicações</div><span class="tag t-real"><i></i>lado famílias</span></div><dl>
+   <dt>Conselho</dt><dd><b>5 membros — 3 das famílias</b> (incl. presidente, <b>sem</b> voto de qualidade) e 2 da CNP</dd>
+   <dt>Diretoria</dt><dd>3 diretores: CNP indica o <b>Diretor Presidente e Financeiro</b>; famílias indicam Operações e Negócios</dd>
+   <dt>Quóruns</dt><dd>Instalação/deliberação qualificadas: <b>75% + 1</b> (assembleia) e <b>4/5</b> (conselho)</dd>
+   <dt>Comitês</dt><dd>6 comitês não deliberativos; CNP com maioria em riscos/compliance, auditoria e partes relacionadas</dd>
+   <dt>Dividendos</dt><dd>Obrigatório anual de <b>25% do lucro líquido</b></dd>
+  </dl></div>
+  <div class="ccard"><div class="ch"><div class="ct">Vetos e proteções da CNP</div><span class="tag t-pres"><i></i>enquanto ≥ 25%</span></div><dl>
+   <dt>Vetos</dt><dd><b>18 matérias de assembleia + 19 de conselho</b>, discricionários: plano de negócios, orçamento, práticas contábeis/tributárias, partes relacionadas, reorganizações, capital, políticas comerciais</dd>
+   <dt>Lock-up</dt><dd>5 anos; depois primeira oferta, preferência e tag along</dd>
+   <dt>Opções</dt><dd>Put/call por troca de controle; put por concorrência a valor justo (banco de investimento); opção por evento crítico a preço punitivo</dd>
+   <dt>Não concorrência</dt><dd>Nacional, 5 anos, multa de <b>R$ 160 mi</b> — "em contrapartida ao Preço de Aquisição"</dd>
+   <dt>Distribuição</dt><dd>Contrato de Distribuição com exclusividade de seguros CNP nos canais Embracon (condição do fechamento)</dd>
+  </dl></div>
+ </div>
+ <div class="note"><strong>Leitura.</strong> Os vetos da CNP são amplos (não meramente protetivos), mas as famílias mantêm 60% dos votos, a maioria do conselho e a presidência; o rol de vetos não alcança a eleição da maioria do conselho nem a aprovação ordinária de contas. Para a SF, isso é minoritário qualificado — não o consentimento unânime contratado sobre as atividades relevantes que o CPC 19 exige ("co-controle é só quando as duas partes têm direito equivalente — aí não precisa desse negócio de veto", Rafael Andrade). O BACEN, por sua vez, aprovou expressamente uma <em>alteração de controle</em>.</div>
+ <h3 class="sec">Divergências entre as fontes (reconciliação)</h3>
+ <div class="tw"><table><thead><tr><th>Tema</th><th>Versão anterior</th><th>Versão contratada (prevalece)</th></tr></thead><tbody>
+  ${d.div.map(r=>`<tr><td><strong>${E(r.t)}</strong></td><td style="color:var(--ink2)">${r.a}</td><td style="color:var(--ink2)">${r.b}</td></tr>`).join('')}
+ </tbody></table></div>`;}
+
+function renderCpc(){const d=D.cpc;document.getElementById('t-cpc').innerHTML=`
+ <h2>3. A controvérsia: CPC 15 × CPC 19</h2>
+ <p class="lead">O contrato manda lavrar a incorporação a valor patrimonial contábil e silencia sobre a caracterização contábil. A Deloitte propõe joint operation (CPC 19); a Stocche Forbes sustenta combinação de negócios (CPC 15). A tabela abaixo reconstrói o comparativo conceitual preparado pela Malu (e-mails de 18–21.08.2026) a pedido do Molina.</p>
+ <div class="kpis">
+  <div class="kpi"><div class="kl">Posição Deloitte (auditora)</div><div class="kv" style="color:var(--pres)">CPC 19</div><div class="ks">joint operation por "co-controle" via vetos; AVJ de CNP + Embracon em resultado</div></div>
+  <div class="kpi"><div class="kl">Posição Stocche Forbes</div><div class="kv" style="color:var(--real)">CPC 15</div><div class="ks">veto não é controle conjunto; famílias com 60%; contrato fala em "combinação de negócios"</div></div>
+  <div class="kpi"><div class="kl">Quem decide</div><div class="kv">Auditor</div><div class="ks">"o auditor da Embracon é que define se é CPC 15 ou CPC 19" (RC); não trava o closing</div></div>
+  <div class="kpi"><div class="kl">Status</div><div class="kv" style="color:var(--aval)">Em aberto</div><div class="ks">aguarda fundamentação técnica do "Ricardo da DTT" e reunião com CNP + accounting</div></div>
+ </div>
+ <div class="sheet"><table class="sh"><colgroup><col style="width:16%"><col style="width:42%"><col style="width:42%"></colgroup>
+  <thead><tr><th>Dimensão</th><th style="color:var(--real)">CPC 15 — Combinação de Negócios</th><th style="color:var(--pres)">CPC 19 — Joint Operation</th></tr></thead><tbody>
+  ${d.tab.map(r=>`<tr><td class="c-op">${E(r.d)}</td><td>${r.c15}</td><td>${r.c19}</td></tr>`).join('')}
+ </tbody></table></div>
+ <div class="shleg"><span class="k"><i style="background:var(--real)"></i>CPC 15 — tese SF</span><span class="k"><i style="background:var(--pres)"></i>CPC 19 — proposta Deloitte</span></div>
+ <h3 class="sec">O que cada lado sustenta</h3>
+ <div class="cgrid">
+  <div class="ccard"><div class="ch"><div class="ct">Argumentos CPC 15</div><span class="tag t-real"><i></i>Stocche Forbes</span></div><dl>
+   <dt>Controle</dt><dd>"<b>Veto não é controle compartilhado</b>" (RC); societariamente a Embracon segue com 60%, maioria do conselho e presidência</dd>
+   <dt>CPC 19 exige</dt><dd>Controle conjunto <b>contratualmente convencionado</b>, com consentimento unânime sobre as atividades relevantes — o contrato não fala em controle</dd>
+   <dt>Contrato</dt><dd>Considerandos falam expressamente em "<b>combinação de negócios</b>" (ponto do Molina); "a premissa do deal é uma combinação de negócios" (RC)</dd>
+   <dt>Regulatório</dt><dd>O BACEN aprovou <b>alteração de controle</b>; a descrição regulatória não adota co-controle</dd>
+   <dt>Consequência</dt><dd>PPA apenas do PL da CNP; PL da Embracon não é reavaliado; reflexo das holdings via MEP</dd>
+  </dl></div>
+  <div class="ccard"><div class="ch"><div class="ct">Argumentos CPC 19</div><span class="tag t-pres"><i></i>Deloitte / CNP</span></div><dl>
+   <dt>Co-controle</dt><dd>"Não teve aquisição de controle por um grupo específico, é controle compartilhado" (Pammela); vetos tão qualificados que tudo sujeita-se à anuência da CNP</dd>
+   <dt>Embasamento</dt><dd>Conclusão "bastante discutida com o accounting da companhia", com respaldo do "Ricardo da DTT" — fundamentação ainda não apresentada</dd>
+   <dt>Motivação</dt><dd>"<b>A CNP precisava que fosse joint operation para reconhecer o resultado</b>" (Felipe Argemi) — sob CPC 15 ela teria só MEP de 40%, sem ganho no resultado</dd>
+   <dt>Consequência</dt><dd>Reavaliação a VJ dos patrimônios da CNP <b>e</b> da Embracon, lançada em resultado, com subconta fiscal e passivo diferido</dd>
+  </dl></div>
+ </div>
+ <div class="note neg"><strong>Consequências estruturais do CPC 19 (alinhamento interno, RC).</strong> "Cai a tese do MEP" — o ganho vira AVJ carimbado a 34% com passivo fiscal diferido; "ele vai colocar no preço esse passivo diferido"; e "nunca mais vamos conseguir liquidar as holdings para vender pela PF, porque temos um ganho diferido". A leitura de RC sobre a postura da CNP: "ele quer forçar a remensuração de 100% da parte dele a VJ e colocar o resultado para dentro".</div>
+ <div class="note info"><strong>Ponto técnico (ICPC 09, itens 35–37).</strong> Mesmo em coligadas e controle conjunto, a metodologia do CPC 15 se aplica à participação avaliada por MEP (VJ + residual, com goodwill contido no saldo do investimento) — ou seja, a discussão não elimina o desdobramento a valor justo; muda o rótulo, a extensão (só CNP × CNP + Embracon), o destino da contrapartida e o regime fiscal.</div>`;}
+
+function renderCtb(){const d=D.ctb;document.getElementById('t-ctb').innerHTML=`
+ <h2>4. Contabilização em cada cenário</h2>
+ <p class="lead">Como a operação entra nos livros sob cada caracterização. O bloco CPC 19 reproduz os razonetes-rascunho da Malu, construídos sobre os números ilustrativos da Deloitte — não são os valores contratuais.</p>
+ <h3 class="sec">Cenário CPC 15 — método de aquisição (tese SF)</h3>
+ <div class="cgrid">
+  <div class="ccard"><div class="ch"><div class="ct">Na Embracon (incorporadora)</div><span class="tag t-real"><i></i>CPC 15</span></div><dl>
+   <dt>Ativos CNP</dt><dd>Reconhecidos 100% a <b>valor justo</b> (laudo PPA); PL da Embracon não é reavaliado</dd>
+   <dt>Mais-valia</dt><dd>Com a incorporação imediata, <b>"gruda" nos ativos e passivos de origem</b> (sem conta de investimento intermediária)</dd>
+   <dt>Goodwill</dt><dd>Premissa de cálculo da Malu: <b>todo o excedente é mais-valia/AVJ, sem goodwill</b></dd>
+   <dt>Contrapartida no PL</dt><dd><b>Indefinida</b>: ORA (linha Tonani) × reserva de capital (prática, segundo RC); o CPC "não fala pra onde joga"; a Deloitte nunca respondeu</dd>
+  </dl></div>
+  <div class="ccard"><div class="ch"><div class="ct">Nas holdings e no grupo CNP</div><span class="tag t-real"><i></i>reflexo MEP</span></div><dl>
+   <dt>Savian/JVFJ (60%)</dt><dd>Aumento do investimento por MEP contra conta patrimonial: <b>60% × (PL Embracon contábil + PL CNP a VJ)</b>; possivelmente sem passivo fiscal diferido</dd>
+   <dt>Grupo CNP (40%)</dt><dd>Reflexo por MEP <b>sem trânsito em resultado</b> — exatamente o que a CNP não aceita</dd>
+   <dt>Na planilha</dt><dd>Abrir o valor pós-reorganização em: o que as holdings já tinham + PL contábil da CNP + <b>mais-valia segregada</b> ("um tem mais risco que o outro")</dd>
+  </dl></div>
+ </div>
+ <h3 class="sec">Cenário CPC 19 — razonetes da Malu (ilustrativos DTT)</h3>
+ <div class="base"><h3>Premissas ilustrativas</h3><p class="sub">escala própria — não são os números do deal (1.600 × R$ 1,2 bi; 14,7/25,3% × 13,8/26,2%)</p><dl>
+  <dt>Valuation 100%</dt><dd><b>5.888</b>, atribuído à carteira de clientes; 40% da cia combinada = <b>2.355</b></dd>
+  <dt>Custos históricos</dt><dd>Investimento das holdings na Embracon: <b>178</b> · investimento do grupo CNP na CNP Consórcio: <b>300</b></dd>
+  <dt>Aquisição CNP</dt><dd><b>14,7%</b> por troca de ações + <b>25,3%</b> pagos em caixa (<b>1.600</b>)</dd>
+  <dt>Lógica contábil</dt><dd>Joint operation: cada parte reconhece sua fração dos ativos/passivos a VJ; vendedor remensura a participação retida (lógica CPC 36 de perda de controle com retenção)</dd>
+ </dl></div>
+ <div class="cgrid">
+  <div class="ccard"><div class="ch"><div class="ct">Comprador — grupo CNP</div><span class="tag t-pres"><i></i>sem goodwill</span></div>
+   <table class="et">${d.cnp.map(r=>`<tr><td>${E(r.n)}</td><td>${E(r.v)}</td></tr>`).join('')}</table>
+   <div class="ei"><span class="it">Leitura</span>Aquisição de ativos fora do CPC 15: ganho de <b>566</b> na troca e perda de <b>110</b> no caixa vão a resultado; mais-valia de 455 com DTL de 155 (34%). Earn-out provisionado como <b>despesa permanente indedutível</b> (juros do AVP inclusive).</div></div>
+  <div class="ccard"><div class="ch"><div class="ct">Vendedor — holdings Embracon</div><span class="tag t-pres"><i></i>remensuração</span></div>
+   <table class="et">${d.vend.map(r=>`<tr><td>${E(r.n)}</td><td>${E(r.v)}</td></tr>`).join('')}</table>
+   <div class="ei"><span class="it">Leitura</span>Ganho total de <b>4.955 no resultado</b> (não em reserva/ORA), com DTL de <b>1.165</b>. Earn-out a receber tributável como <b>complemento de preço</b> (GK); AVP em subconta neutralizada, juros tributáveis.</div></div>
+ </div>
+ ${bars('Composição do ganho do vendedor (cenário CPC 19)','razonetes da Malu — valores ilustrativos; total 4.955 em resultado',d.comp,'var(--pres)',F0)}
+ <div class="note neg"><strong>O alerta materializado.</strong> Nos razonetes, tudo transita por resultado e o AVJ fica "carimbado" com tributos diferidos dos dois lados — é a moldura que faz RC dizer que "cai a tese do MEP". Não há goodwill em nenhum dos lados.</div>
+ <div class="note info"><strong>Ponto comum aos dois cenários.</strong> Em ambos, a Embracon registra os ativos da CNP a valor justo. O que muda é o rótulo (mais-valia de aquisição × AVJ espontâneo), a extensão (só CNP × CNP + Embracon), o destino da contrapartida (PL × resultado) e, por decorrência, todo o regime fiscal. "Fiz CPC 15, mas serve pros dois" (Malu).</div>`;}
+
+function renderFis(){const d=D.fis;document.getElementById('t-fis').innerHTML=`
+ <h2>5. Repercussões fiscais</h2>
+ <p class="lead">As três linhas interpretativas para o excedente na incorporação, a jurisprudência mapeada, o risco de enquadramento como asset deal, o ganho de capital do cash out e os dois cenários decididos para a alienação futura.</p>
+ ${kpis(d.kpis)}
+ <h3 class="sec">As três teses na incorporação</h3>
+ <div class="sheet"><table class="sh"><colgroup><col style="width:22%"><col style="width:48%"><col style="width:30%"></colgroup>
+  <thead><tr><th>Caminho</th><th>Mecânica</th><th>Status no caso</th></tr></thead><tbody>
+  <tr class="k-nd"><td class="c-op"><span class="nn">A</span>Neutralidade total (sucessão universal)</td><td>A mais-valia é ajuste "meramente contábil"; nada repercute no IRPJ/CSLL — mas <b>sem step-up</b>: venda futura ao custo antigo; drop down a valor contábil sem tributar.</td><td>"Ninguém segue esse caminho" (Malu)</td></tr>
+  <tr class="k-pos"><td class="c-op"><span class="nn">B</span>Variação de participação via MEP — "o 33" (art. 33, §2º, DL 1.598/77)</td><td>O reflexo nas holdings é ganho pela variação do % (100% → 86,20% com PL maior). Duas leituras: <b>(i) diferimento</b> (tributa na realização) ou <b>(ii) exclusão definitiva que integra o custo</b> — o "custo grátis" (WTorre). O incômodo de RC: "é algo entre valor justo e MEP".</td><td>"É por aqui que a gente tem o nosso caminho" (Malu) — jurisprudência pende ao diferimento</td></tr>
+  <tr class="k-neg"><td class="c-op"><span class="nn">C</span>Reavaliação espontânea — AVJ clássico</td><td>Reconhecimento inicial a valor contábil seguido de "um super AVJ": regime dos arts. 13–14 da Lei 12.973/2014 (diferimento condicionado a <b>subconta</b>), com <b>AVJ Reflexo</b> nas holdings — se venderem a Embracon antes da realização pela investida, elas tributam.</td><td>Moldura que a proposta CPC 19 da DTT atrai; "não há tese de não incidência"</td></tr>
+ </tbody></table></div>
+ <h3 class="sec">Jurisprudência mapeada (CARF)</h3>
+ <div class="sheet"><table class="sh"><colgroup><col style="width:15%"><col style="width:11%"><col style="width:16%"><col style="width:58%"></colgroup>
+  <thead><tr><th>Acórdão</th><th>Data</th><th>Registro do reflexo</th><th>Decisão</th></tr></thead><tbody>
+  ${d.jur.map(r=>`<tr class="${r.k}"><td class="c-op"><span class="nn">${E(r.c)}</span>${E(r.a)}</td><td class="mono">${E(r.d)}</td><td>${E(r.r)}</td><td>${r.dec}</td></tr>`).join('')}
+ </tbody></table></div>
+ <div class="shleg"><span class="k"><i style="background:var(--ok)"></i>favorável à exclusão definitiva</span><span class="k"><i style="background:var(--aval)"></i>sem tributação imediata, com diferimento</span></div>
+ <div class="note"><strong>Leitura da Malu.</strong> É possível defender a não tributação definitiva (WTorre), mas os acórdãos recentes se apoiam na repercussão contábil: enquanto o ganho não transita pelo resultado, não há tributação; quando migra de ORA para a DRE, tributa-se "por ausência de regra de exclusão". Por isso "é essencial entender com os auditores como será a contabilização — na origem e na eventual venda — para testar a força da tese vis-à-vis a jurisprudência". Doutrina citada: Tonani 2022, Adauto Dutra (diferimento), Mariz 2020 (ganho agrega custo), Victor Lyra 2024.</div>
+ <h3 class="sec">Alienação futura — os dois cenários decididos</h3>
+ <div class="cgrid">
+  <div class="ccard"><div class="ch"><div class="ct">"Custo gordão"</div><span class="tag t-ok"><i></i>nunca tributa</span></div><dl>
+   <dt>Custo fiscal</dt><dd>Custo original <b>+ mais-valia</b> (o ganho lançado no PL "dá custo")</dd>
+   <dt>Fundamento</dt><dd>Art. 33, §2º, DL 1.598/77 como <b>exclusão definitiva</b> — linha WTorre</dd>
+   <dt>Efeito no passo F</dt><dd>A mais-valia <b>nunca é tributada</b> na venda futura</dd>
+   <dt>Risco</dt><dd>Requalificação como AVJ Reflexo; jurisprudência recente pende ao diferimento</dd>
+  </dl></div>
+  <div class="ccard"><div class="ch"><div class="ct">"Custo magrinho"</div><span class="tag t-aval"><i></i>diferimento</span></div><dl>
+   <dt>Custo fiscal</dt><dd>Custo <b>original</b>, sem a mais-valia</dd>
+   <dt>Fundamento</dt><dd>Diferimento (leitura majoritária do art. 33, §2º; regime do AVJ dos arts. 13–14)</dd>
+   <dt>Efeito no passo F</dt><dd>GK = preço − custo original: a mais-valia é <b>tributada na alienação</b></dd>
+   <dt>No CPC 19</dt><dd>Só existe este cenário — 34% garantidos na entidade que alienar</dd>
+  </dl></div>
+ </div>
+ <div class="note info"><strong>Simulação.</strong> Os cenários são agnósticos quanto à classificação contábil ("tributar na hora não tem tanta discussão; é ou diferido ou anulado"). Sem preço definido para a 2ª venda, o preço será <b>sensibilizado</b> para evidenciar o efeito do AVJ (action item do call 26.08).</div>
+ <h3 class="sec">Demais frentes</h3>
+ <div class="note neg"><strong>Risco "asset deal" (arts. 20–22 × art. 28).</strong> O regime de aproveitamento fiscal da mais-valia/ágio pressupõe <b>aquisição de participação societária</b> avaliada por MEP entre partes independentes, com laudo protocolado em 13 meses e subcontas. Na incorporação direta da CNP <b>não há aquisição prévia de participação pela incorporadora</b> — risco de a Embracon ficar fora do regime (ágio de asset deal indedutível — art. 28; compra vantajosa tributada em parcelas mínimas de 1/60 — art. 27). Já a CNP Holding, na parcela adquirida em dinheiro, tem investimento por MEP e "consegue argumentar o ágio fiscal" ao menos nessa parcela; "o problema tá na parte da aquisição em ações".</div>
+ <div class="note"><strong>Cash out — GK imediato das holdings.</strong> Primária e secundária simultâneas = <b>operação única</b> (julgado da Amanda): as holdings apuram ganho de capital com o <b>custo antigo</b> — a mais-valia vem só do valor da CNP e não incrementa o custo nessa venda. Ordem de grandeza (premissas antigas da planilha): custo de ~R$ 17,8 mi por holding contra preço de R$ 750 mi → 34% sobre praticamente todo o preço.</div>
+ <div class="note"><strong>Earn-out.</strong> Vendedores: complemento de preço (GK), com AVP em subconta neutralizada e juros tributáveis. Comprador (razonetes): despesa permanente indedutível, fora do CPC 15.</div>
+ <div class="note neg"><strong>Rendimentos das aplicações financeiras do acervo incorporado.</strong> Tema do escopo do projeto <b>não tratado em nenhum documento analisado</b> até aqui (ausência registrada no call 26.08). Pendência a endereçar na próxima etapa.</div>`;}
+
+function renderMol(){const d=D.mol;
+ const c2rows=d.cen2.map(r=>`<tr><td class="c-op">${E(r.n)}${r.obs?`<span class="nn" style="margin-top:2px">${E(r.obs)}</span>`:''}</td><td class="c-es">${FM(r.p)}</td><td class="c-es">${FM(r.c)}</td><td class="c-es">${FM(r.gk)}</td><td class="c-es neg">${FM(r.t)}</td></tr>`).join('');
+ document.getElementById('t-mol').innerHTML=`
+ <h2>6. Planilha do Molina (21.05.2025)</h2>
+ <p class="lead">"Projeto Another House — Cálculos tributários": simulação do ganho de capital da venda secundária, comparando a venda pelas holdings com a venda pelas pessoas físicas, e o ajuste de preço decorrente. Inclui os balanços 12/2024 do grupo. Valores em R$.</p>
+ <div class="note"><strong>Contexto de leitura.</strong> A planilha é <b>anterior à estrutura final</b>: simula 20% por R$ 1,5 bi com earn-out zerado ("a confirmar entre 300–800 mi") e a alternativa de venda pelas PFs — estrutura descartada ("não toparam vender na física"). Não cobre a incorporação, CPC 15 × 19, PPA, IR diferido nem o lado CNP. No call de 26.08 foi chamada de "rascunho" e será <b>refeita em versão client friendly</b> com os cenários gordão × magrinho, a segregação acervo × mais-valia e sensibilidade de preço (pedido de RC, e-mail 19.08: segregar ganho por variação de % puro × efeito reflexo questionável).</div>
+ ${kpis(d.kpis)}
+ ${bars('Tributos totais por alternativa','cenários da planilha — 20% por R$ 1,5 bi (premissas de mai/2025)',[{n:'Holdings (34%)',v:497869509,c:'var(--real)'},{n:'Pessoas físicas (IRPF)',v:323517067,c:'var(--pres)'},{n:'Economia da via PF',v:174352442,c:'var(--ok)'}],'var(--real)',n=>'R$ '+FM(n))}
+ <div class="shleg"><span class="k"><i style="background:var(--real)"></i>venda pelas holdings</span><span class="k"><i style="background:var(--pres)"></i>venda pelas PFs</span><span class="k"><i style="background:var(--ok)"></i>diferença</span></div>
+ <h3 class="sec">Cenário 1 — venda pelas holdings (IRPJ/CSLL 34%)</h3>
+ <div class="sheet"><table class="sh"><colgroup><col style="width:32%"><col style="width:17%"><col style="width:17%"><col style="width:17%"><col style="width:17%"></colgroup>
+  <thead><tr><th>Holding</th><th class="a-r">Preço</th><th class="a-r">Custo (valor contábil de 20%)</th><th class="a-r">Ganho de capital</th><th class="a-r">IRPJ/CSLL (34%)</th></tr></thead><tbody>
+  ${d.cen1.map(r=>`<tr><td class="c-op">${E(r.n)}</td><td class="c-es">${FM(r.p)}</td><td class="c-es">${FM(r.c)}</td><td class="c-es">${FM(r.gk)}</td><td class="c-es neg">${FM(r.t)}</td></tr>`).join('')}
+  <tr class="tot"><td>TOTAL</td><td class="c-es">1.500,0 mi</td><td class="c-es">35,7 mi</td><td class="c-es">1.464,3 mi</td><td class="c-es neg">497,9 mi</td></tr>
+ </tbody></table></div>
+ <h3 class="sec">Cenário 2 — venda pelas pessoas físicas (IRPF progressivo, Lei 13.259/2016)</h3>
+ <div class="sheet"><table class="sh"><colgroup><col style="width:32%"><col style="width:17%"><col style="width:17%"><col style="width:17%"><col style="width:17%"></colgroup>
+  <thead><tr><th>Pessoa</th><th class="a-r">Preço</th><th class="a-r">Custo</th><th class="a-r">Ganho de capital</th><th class="a-r">IRPF (15–22,5%)</th></tr></thead><tbody>
+  ${c2rows}
+  <tr class="tot"><td>TOTAL</td><td class="c-es">1.500,0 mi</td><td class="c-es">35,7 mi</td><td class="c-es">—</td><td class="c-es neg">323,5 mi</td></tr>
+ </tbody></table></div>
+ <div class="note info"><strong>Como funciona a progressividade.</strong> Faixas do GK de PF: 15% até R$ 5 mi; 17,5% de 5–10 mi; 20% de 10–30 mi; 22,5% acima de R$ 30 mi — alíquota efetiva de ~22,1% nos valores simulados. Juarez concentra 100% da JVFJ pela premissa do <b>usufruto</b> ("único beneficiário da operação").</div>
+ <h3 class="sec">Ajuste de preço (compartilhamento da economia)</h3>
+ <div class="tw"><table><tbody>
+  <tr><td><strong>Tributos na venda pelas holdings</strong></td><td class="num">R$ 497,87 mi</td></tr>
+  <tr><td><strong>Tributos na venda pelas PFs</strong></td><td class="num">R$ 323,52 mi</td></tr>
+  <tr><td><strong>Diferença (economia da via PF)</strong></td><td class="num">R$ 174,35 mi</td></tr>
+  <tr><td><strong>50% (parcela compartilhada com a compradora)</strong></td><td class="num">R$ 87,18 mi</td></tr>
+  <tr><td><strong>Ajuste com gross-up de 34% (÷ 0,66)</strong></td><td class="num" style="color:var(--ok);font-weight:700">R$ 132,09 mi</td></tr>
+ </tbody></table></div>
+ <div class="note"><strong>Lógica negocial.</strong> A economia fiscal da estrutura PF seria dividida 50/50 com a compradora via redução/ajuste de preço; o gross-up neutraliza os 34% que incidiriam sobre a própria parcela de ajuste recebida pelas holdings. Como a via PF foi descartada no contrato, o cálculo permanece como referência da negociação de preço.</div>
+ <h3 class="sec">Balanços 12/2024 e atributos fiscais</h3>
+ <div class="egrid">${d.emp.map(e=>`<div class="ecard"><div class="eh"><span class="en">${E(e.n)}</span><span class="eb"><span class="tag ${e.cls}"><i></i>${E(e.r)}</span></span></div>
+  <table class="et">${e.m.map(m=>`<tr><td>${E(m[0])}</td><td>${E(m[1])}</td></tr>`).join('')}</table>
+  <div class="ei"><span class="it">Observações</span>${e.o}</div></div>`).join('')}</div>
+ <div class="note"><strong>Pontos de atenção da planilha.</strong> O cenário PF pressupõe redução de capital prévia a valor contábil (art. 22, Lei 9.249/95) <b>não modelada</b> — histórico de questionamento no CARF quando concomitante à venda; a premissa do usufruto de Juarez como único beneficiário é juridicamente discutível; o custo da JVFJ foi <b>estimado</b> igual ao da Savian ("não recebemos documentação contábil"); somas de participação da JVFJ com arredondamentos (99,99%/100,01%); e o 0,01% direto das PFs foi ignorado.</div>`;}
+
+function renderSrc(){const d=D.src;document.getElementById('t-src').innerHTML=`
+ <h2>7. Fontes, pendências e glossário</h2>
+ <p class="lead">Rastreabilidade do dashboard: o que cada documento sustenta, o que segue em aberto no caso e os termos do vocabulário interno. A base de conhecimento completa está em <span class="mono">docs/analise/</span> no repositório (checkpoint em <span class="mono">00_CHECKPOINT.md</span>).</p>
+ <div class="tw"><table><thead><tr><th>Documento</th><th>Data</th><th>O que sustenta</th></tr></thead><tbody>
+  ${d.fontes.map(f=>`<tr><td><strong>${E(f.doc)}</strong></td><td class="mono">${E(f.dt)}</td><td style="color:var(--ink2)">${f.s}</td></tr>`).join('')}
+ </tbody></table></div>
+ <h3 class="sec">Pendências do caso</h3>
+ <ol class="pend">${d.pend.map(p=>`<li>${p}</li>`).join('')}</ol>
+ <div class="base"><h3>Continuidade do trabalho</h3><p class="sub">action items definidos nos calls e e-mails de agosto/2026</p><dl>
+  <dt>Nova planilha</dt><dd>Refazer a planilha do Molina em versão "client friendly": efeitos numéricos contábeis e fiscais, segregando ganho por variação de % puro × efeito reflexo questionável (pedido de RC, 19.08)</dd>
+  <dt>Cenários</dt><dd>Apenas 2 na alienação futura: custo "gordão" (nunca tributa) × "magrinho" (diferido), com sensibilidade de preço para evidenciar o AVJ</dd>
+  <dt>Segregação</dt><dd>Separar acervo contábil da CNP × mais-valia ("um tem mais risco que o outro"); registrar a tese da operação única com o julgado da Amanda</dd>
+  <dt>Deck</dt><dd>Desenhar o fluxo da operação (histórico e passos societários) — este dashboard atende parcialmente</dd>
+  <dt>Insumos a receber</dt><dd>Planilha do Gabriel/"Cheng" (base "vendendo pela física", a converter); pesquisa de jurisprudência no "Jet"; fundamentação técnica da DTT para a joint operation</dd>
+  <dt>Tema novo</dt><dd>Natureza e tributação dos rendimentos das aplicações financeiras do acervo incorporado — ausente de todos os documentos até aqui</dd>
+ </dl></div>
+ <h3 class="sec">Glossário do caso</h3>
+ <div class="tw"><table><thead><tr><th style="width:220px">Termo</th><th>Significado no caso</th></tr></thead><tbody>
+  ${d.glos.map(g=>`<tr><td><strong>${E(g[0])}</strong></td><td style="color:var(--ink2)">${E(g[1])}</td></tr>`).join('')}
+ </tbody></table></div>`;}
+
+const T=[['vg','1. Visão geral'],['est','2. Operação e estrutura'],['cpc','3. CPC 15 × CPC 19'],['ctb','4. Contabilização'],['fis','5. Repercussões fiscais'],['mol','6. Planilha do Molina'],['src','7. Fontes e pendências']];
+const R={vg:renderVg,est:renderEst,cpc:renderCpc,ctb:renderCtb,fis:renderFis,mol:renderMol,src:renderSrc}, done={};
+function show(k){T.forEach(([id])=>{document.getElementById('t-'+id).classList.toggle('hidden',id!==k);
+ document.getElementById('b-'+id).setAttribute('aria-selected',String(id===k));});
+ if(!done[k]){R[k]();done[k]=1;} window.scrollTo({top:0,behavior:'instant'});}
+document.getElementById('nav').innerHTML=T.map(([id,l])=>`<button id="b-${id}" role="tab" aria-selected="false" type="button">${l}</button>`).join('');
+T.forEach(([id])=>document.getElementById('b-'+id).onclick=()=>show(id));
+document.getElementById('foot').innerHTML='<b>Fontes.</b> Aba 1–2: Acordo de Investimento (20.10.2025), Ofício BACEN 31070/2026, deck SF (mai/2025), calls de ago/2026. Aba 3: e-mails Malu ↔ Renato (18–21.08.2026) e call Deloitte (17.08.2026). Aba 4: razonetes da Malu sobre ilustrativos DTT. Aba 5: PPT "Reflexo MV Incorporação CPC 15", call interno 26.08.2026 e obra "O ágio e a mais-valia de ativos na Lei nº 12.973/2014". Aba 6: planilha Embracon_simulação tributária (21.05.2025).<br><br><b>Ressalvas.</b> Documento de trabalho interno, para contextualização e consulta — não constitui opinião legal. Os números ilustrativos (DTT/razonetes, base 178/300/5.888) e os da planilha do Molina (premissas de mai/2025) não são os valores contratuais e não são comparáveis entre si. O enquadramento contábil (CPC 15 × CPC 19) está em aberto e cabe ao auditor da Embracon; as teses fiscais descritas envolvem risco e jurisprudência não pacificada.';
+const tg=document.getElementById('tg');
+function isDark(){const a=document.documentElement.getAttribute('data-theme');
+ return a==='dark'||(a!=='light'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);}
+function syncTg(){tg.textContent=isDark()?'Modo claro':'Modo escuro';}
+tg.onclick=()=>{document.documentElement.setAttribute('data-theme',isDark()?'light':'dark');syncTg();};
+syncTg();
+show('vg');
+</script>
