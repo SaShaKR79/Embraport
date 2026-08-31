@@ -66,11 +66,12 @@
 ```
 
 ### Nota sobre a planilha CPC 15 (sessão 31.08.2026)
-- Base de valores: draft da MLA (`Exercicio_Incorporaçao_draft1`), aba **"base 30 06 26com dividendos"** (balanços 30.06.2026, R$ mi; Embracon PL 239,488 após dividendos de 120; CNP PL 838,735; 13,8%; cash out 600/holding; segregação Deloitte VJ 866 / MV 300).
-- 8 abas: Contexto · Premissas · 1. Situação Antes · 2. Incorporação CPC 15 (reflexo, lançamentos, segregação de risco em 3 camadas, lado CNP) · 3. Cash Out (GK nas 2 hipóteses) · 4. Caixa PJ×PF · 5. Alienação Futura (sensibilidade) · Conclusão. Tudo por fórmula (227 fórmulas, recalculado sem erros).
-- Números-síntese: parcela incorporada 344,97/holding (689,94 total); custo gordinho 464,71 × magrinho 119,74; IR cash out 383,25 (A) × 311,95 (B); benefício total da tese do custo gordinho = **234,58 = 34% × 689,94** (71,30 no cash out + até 163,28 no passo F).
-- **Ajuste de critério vs. draft** (documentado na aba Contexto, nota 3): custo da parcela alienada rateado por 13,1/43,1 = 30,39% (draft multiplicava por 13,1% direto).
-- Checks de balanço herdados do draft (Embracon −0,34; CNP +0,84) mantidos e sinalizados — a conciliar com o balancete.
+- **v2 (vigente)**: 3 abas — **Premissas** (somente valores do draft MLA: 13,8%; 40%; 34%; dividendos 120; preço 600/holding; segregação DTT VJ 866/MV 300) · **Incorporação CPC 15** (fluxo sequencial em aba única: balanços-base 30.06.26 → pré-incorporação → incorporação com reflexo e segregação de risco em 3 camadas → cash out com as 2 hipóteses → alienação futura com preço editável, cada bloco com quadro conclusivo) · **Conclusão** (síntese A × B + leitura de riscos). 99 fórmulas, recalculada sem erros. Formatação: fontes pretas; vermelho só em barras de título e negativos; amarelo = inputs editáveis.
+- v1 (8 abas, mais analítica) mantida como histórico em `planilhas/`.
+- Base de valores: draft da MLA (`Exercicio_Incorporaçao_draft1`), aba **"base 30 06 26com dividendos"** (Embracon PL 239,488 após dividendos de 120; CNP PL 838,735).
+- Números-síntese: parcela incorporada 344,97/holding (689,94 total); custo gordinho 464,71 × magrinho 119,74; IR cash out 383,25 (A) × 311,95 (B); benefício total da tese do custo gordinho = **234,58 = 34% × 689,94** (71,30 no cash out + até 163,28 na alienação futura).
+- **Critério de rateio do custo no cash out**: proporcional à fração alienada (13,1/43,1 = 30,39%) — o draft multiplicava o custo por 13,1% direto; ajuste mantido na v2.
+- Diferenças de fechamento dos balanços do draft (Embracon −0,34; CNP +0,84) não afetam os cálculos (v2 parte das composições de PL).
 
 Branch de trabalho: `claude/asset-incorporation-analysis-p46li6`.
 
