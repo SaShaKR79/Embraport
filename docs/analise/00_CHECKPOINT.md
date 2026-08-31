@@ -27,6 +27,7 @@
 | **Síntese consolidada do caso** | ✅ | `docs/analise/01_sintese_caso.md` ⭐ |
 | Spec de design do dashboard modelo (Grupo Primo) | ✅ | `docs/analise/10_design_spec_modelo_dashboard.md` |
 | **Dashboard da operação** | ✅ | `dashboard/dashboard_embracon_cnp.html` |
+| **Planilha expositiva CPC 15** (2 hipóteses de custo: "magrinho" × "gordinho") | ✅ | `planilhas/Exercicio_Incorporacao_CPC15_v1.xlsx` (fonte: draft MLA "base 30 06 26com dividendos"; gerador: `planilhas/build_planilha_cpc15.py`) |
 
 ## 3. Números-chave (conferidos nas fontes)
 
@@ -60,8 +61,16 @@
 ```
 ├── docs/analise/          ← base de conhecimento (esta pasta) — 00 a 10
 ├── dashboard/             ← dashboard HTML (padrão visual Grupo Primo)
+├── planilhas/             ← planilha expositiva CPC 15 (v1) + draft MLA fonte + script gerador
 ├── *.pdf, *.pptx, *.png, *.txt, *.xlsx  ← documentos-fonte do caso (raiz)
 ```
+
+### Nota sobre a planilha CPC 15 (sessão 31.08.2026)
+- Base de valores: draft da MLA (`Exercicio_Incorporaçao_draft1`), aba **"base 30 06 26com dividendos"** (balanços 30.06.2026, R$ mi; Embracon PL 239,488 após dividendos de 120; CNP PL 838,735; 13,8%; cash out 600/holding; segregação Deloitte VJ 866 / MV 300).
+- 8 abas: Contexto · Premissas · 1. Situação Antes · 2. Incorporação CPC 15 (reflexo, lançamentos, segregação de risco em 3 camadas, lado CNP) · 3. Cash Out (GK nas 2 hipóteses) · 4. Caixa PJ×PF · 5. Alienação Futura (sensibilidade) · Conclusão. Tudo por fórmula (227 fórmulas, recalculado sem erros).
+- Números-síntese: parcela incorporada 344,97/holding (689,94 total); custo gordinho 464,71 × magrinho 119,74; IR cash out 383,25 (A) × 311,95 (B); benefício total da tese do custo gordinho = **234,58 = 34% × 689,94** (71,30 no cash out + até 163,28 no passo F).
+- **Ajuste de critério vs. draft** (documentado na aba Contexto, nota 3): custo da parcela alienada rateado por 13,1/43,1 = 30,39% (draft multiplicava por 13,1% direto).
+- Checks de balanço herdados do draft (Embracon −0,34; CNP +0,84) mantidos e sinalizados — a conciliar com o balancete.
 
 Branch de trabalho: `claude/asset-incorporation-analysis-p46li6`.
 
