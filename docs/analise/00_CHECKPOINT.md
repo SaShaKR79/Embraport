@@ -27,7 +27,7 @@
 | **Síntese consolidada do caso** | ✅ | `docs/analise/01_sintese_caso.md` ⭐ |
 | Spec de design do dashboard modelo (Grupo Primo) | ✅ | `docs/analise/10_design_spec_modelo_dashboard.md` |
 | **Dashboard da operação** | ✅ | `dashboard/dashboard_embracon_cnp.html` |
-| **Planilha expositiva CPC 15** (2 hipóteses de custo: "magrinho" × "gordinho") | ✅ | `planilhas/Exercicio_Incorporacao_CPC15_v2.xlsx` — **versão vigente** (v1 mantida como histórico; geradores `build_planilha_cpc15*.py`) |
+| **Planilha expositiva CPC 15** (2 hipóteses de custo: "magrinho" × "gordinho") | ✅ | `planilhas/Exercicio_Incorporacao_CPC15_v3.xlsx` — **versão vigente** (aba "Contabilização" com seção do acervo vertido) (v1 mantida como histórico; geradores `build_planilha_cpc15*.py`) |
 
 ## 3. Números-chave (conferidos nas fontes)
 
