@@ -2,7 +2,7 @@
 
 > **Ponto de ancoragem do projeto.** Leia este arquivo primeiro ao iniciar uma nova sessão/chat.
 > Ele resume o caso, o que já foi feito, onde está cada coisa e o que falta.
-> Última atualização: **28.08.2026** (sessão de análise completa + dashboard).
+> Última atualização: **03.09.2026** (aba "Segregação de Risco", quadros MLA explicados, draft2/PPT atualizados).
 
 ---
 
@@ -27,7 +27,9 @@
 | **Síntese consolidada do caso** | ✅ | `docs/analise/01_sintese_caso.md` ⭐ |
 | Spec de design do dashboard modelo (Grupo Primo) | ✅ | `docs/analise/10_design_spec_modelo_dashboard.md` |
 | **Dashboard da operação** | ✅ | `dashboard/dashboard_embracon_cnp.html` |
-| **Planilha expositiva CPC 15** (2 hipóteses de custo: "magrinho" × "gordinho") | ✅ | `planilhas/Exercicio_Incorporacao_CPC15_v3.xlsx` — **versão vigente** (aba "Contabilização" com seção do acervo vertido) (v1 mantida como histórico; geradores `build_planilha_cpc15*.py`) |
+| **Planilha expositiva CPC 15** (2 hipóteses de custo: "magrinho" × "gordinho") | ✅ | `planilhas/Exercicio_Incorporacao_CPC15_v3.xlsx` (3 abas, aba "Contabilização" com acervo vertido) e **`planilhas/Exercicio_Incorporacao_CPC15_v1.1.xlsx`** (versão de 8 abas editada pelo usuário + **aba "6. Segregação de Risco"** que reproduz os quadros da MLA — CPC 15, CPC 19, venda PJ×PF, riscos 1/2); geradores `build_*.py` |
+| **Quadros MLA explicados** (segregação de risco, CPC 19, venda futura) | ✅ | `docs/analise/11_quadros_MLA_segregacao_risco.md` |
+| **Draft2 MLA atualizado (31.07)** e **PPT SF CPC 15×19** (slides 2 e 4 atualizados) | ✅ | `planilhas/Exercicio_Incorporacao_draft2_MLA_31.08_v3.xlsx` · `planilhas/Embracon_CPC_15_x_19_atualizado.pptx` · PDF conclusivo da SF em `planilhas/` |
 
 ## 3. Números-chave (conferidos nas fontes)
 
