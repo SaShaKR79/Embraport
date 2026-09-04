@@ -2,7 +2,7 @@
 
 > **Ponto de ancoragem do projeto.** Leia este arquivo primeiro ao iniciar uma nova sessão/chat.
 > Ele resume o caso, o que já foi feito, onde está cada coisa e o que falta.
-> Última atualização: **03.09.2026** (aba "Segregação de Risco", quadros MLA explicados, draft2/PPT atualizados).
+> Última atualização: **04.09.2026** (aba "Segregação de Risco" reconstruída dentro da planilha-entregável do usuário, com PL 254/127/127/800 e VM CNP 822).
 
 ---
 
@@ -30,6 +30,7 @@
 | **Planilha expositiva CPC 15** (2 hipóteses de custo: "magrinho" × "gordinho") | ✅ | `planilhas/Exercicio_Incorporacao_CPC15_v3.xlsx` (3 abas, aba "Contabilização" com acervo vertido) e **`planilhas/Exercicio_Incorporacao_CPC15_v1.1.xlsx`** (versão de 8 abas editada pelo usuário + **aba "6. Segregação de Risco"** que reproduz os quadros da MLA — CPC 15, CPC 19, venda PJ×PF, riscos 1/2); geradores `build_*.py` |
 | **Quadros MLA explicados** (segregação de risco, CPC 19, venda futura) | ✅ | `docs/analise/11_quadros_MLA_segregacao_risco.md` |
 | **Draft2 MLA atualizado (31.07)** e **PPT SF CPC 15×19** (slides 2 e 4 atualizados) | ✅ | `planilhas/Exercicio_Incorporacao_draft2_MLA_31.08_v3.xlsx` · `planilhas/Embracon_CPC_15_x_19_atualizado.pptx` · PDF conclusivo da SF em `planilhas/` |
+| **Planilha-entregável do usuário com a aba "Segregação de Risco" (v4, 04.09)** ⭐ vigente | ✅ | `planilhas/Embracon_simulacao_tributaria_04.09.26_v4.xlsx` (aba vinculada à "Cálculos da Operação"; 5 blocos: camadas CPC 15 → CPC 19 → venda PJ/PF → sensibilidade → conclusão executiva); fonte `..._v3 (fonte usuario).xlsx`; gerador `build_segregacao_sim.py` + `inject_values.py` (cirurgia OOXML, preserva logo/abas); explicação em `docs/analise/12_aba_segregacao_risco_v4.md` |
 
 ## 3. Números-chave (conferidos nas fontes)
 
