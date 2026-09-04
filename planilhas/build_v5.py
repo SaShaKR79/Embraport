@@ -235,10 +235,10 @@ class Sheet:
     def para(self, row, text, style="para", cols="B:K", cpl=None):
         a, b = cols.split(":")
         self.put(f"{a}{row}", text, S[style]); self.merge(f"{a}{row}:{b}{row}", S[style])
-        cpl = cpl or max(40, int(self.width_units(a, b) * 0.95))
+        cpl = cpl or max(40, int(self.width_units(a, b) * 1.15))
         lines = max(1, math.ceil(len(text) / cpl)); self.row_h[row] = 15.0 * lines + 4
     def text_h(self, row, text, cols):
-        a, b = cols.split(":"); cpl = max(20, int(self.width_units(a, b) * 0.95))
+        a, b = cols.split(":"); cpl = max(20, int(self.width_units(a, b) * 1.15))
         lines = max(1, math.ceil(len(text) / cpl)); self.row_h[row] = max(self.row_h.get(row, 0), 15.0 * lines + 2)
     def redbar(self, row, text):
         self.put(f"B{row}", text, S["redbar"]); self.merge(f"B{row}:K{row}", S["redbar"]); self.row_h[row] = 18.5
@@ -251,7 +251,7 @@ class Sheet:
         self.row_h[row] = height
     def head(self, title, date="4 de setembro de 2026", title_col="C"):
         self.put(f"{title_col}4", title, S["title"]); self.row_h[4] = 26
-        self.put(f"{title_col}5", date, xf(F_IT, h="left", v="top")); self.row_h[5] = 26
+        self.put(f"{title_col}5", date, xf(F_IT, h="left", v="top")); self.row_h[5] = 44
     def xml(self, rid_drawing="rId1", tab_selected=False):
         rows = sorted({r for r, _ in self.cells}); max_row = max(rows)
         def cell_xml(r, c, d):
@@ -290,7 +290,7 @@ GREEN, AMBER, RED = "FF00B050", "FFFFC000", "FFFF0000"
 
 # ============================================================ PREMISSAS
 P = Sheet("Premissas", W_WIDE); P.head("Premissas e Fatos da Operação")
-P.redbar(6, "Fatos da operação (Acordo de Investimento e material SF de 31.08.2026)")
+P.redbar(6, "Fatos da operação (Acordo de Investimento, Ofício BACEN 31070/2026, calls Deloitte/SF e material SF de 31.08.2026)")
 facts = [
     "• Incorporação: a Embracon incorpora a CNP (incorporação plena, aprovada pelo BACEN); o acervo da CNP entra pelo valor de mercado apurado em laudo (PPA) e as Partes CNP recebem 13,8% do capital da Embracon (relação de troca).",
     "• Cash-out simultâneo: as Partes CNP adquirem das Holdings 26,2% da Embracon (13,1% de cada uma) por R$ 1.200 milhões, desconsiderando correção pelo IPCA, ajustes de caixa e eventual earn-out de até R$ 680 milhões. A secundária é entendida como concomitante à incorporação (operação única).",
@@ -307,8 +307,8 @@ prem = [
     (17, "Data-base dos balanços", "30.06.2026", "inp_txt", "Balanços esboçados pela Embracon (agosto/2026), não definitivos", "data"),
     (18, "Unidade monetária", "R$ milhões", "inp_txt", "", "unid"),
     (19, "PL contábil da Embracon (antes da incorporação)", 254, "inp_int", "Corresponde ao custo original do investimento das Holdings (Savian + JVFJ)", "pl_e"),
-    (20, "Investimento original — Savian (50%)", 127, "inp_int", "Custo histórico das ações da Embracon na Savian", "inv_s"),
-    (21, "Investimento original — JVFJ (50%)", 127, "inp_int", "Custo histórico das ações da Embracon na JVFJ", "inv_j"),
+    (20, "Investimento original — Savian (50% do PL da Embracon)", "=C19/2", "int_it", "Derivado: as Holdings são simétricas no modelo (50/50); a aba 'Cálculos da Operação' dobra a coluna Savian para obter os totais", "inv_s"),
+    (21, "Investimento original — JVFJ (50% do PL da Embracon)", "=C20", "int_it", "Derivado: igual ao custo da Savian (simetria das Holdings)", "inv_j"),
     (22, "PL contábil da CNP", 800, "inp_int", "Esboço da Embracon; o material SF de 31.08 usava 839", "pl_c"),
     (23, "Valor de mercado da CNP (valor incorporado no CPC 15 — PPA)", 822, "inp_int", "≈ EV da CNP no Acordo de Investimento (R$ 821,9 mi, data-base 31.12.2024); a diferença para o PL contábil é a mais-valia", "vm_c"),
     (24, "Valor justo da Embracon (EV — Acordo de Investimento, data-base 31.12.2024)", 5133, "inp_int", "Usado apenas no cenário CPC 19 (reavaliação da Embracon); o material SF de 31.08 usava o EV total DTT de 5.588", "vj_e"),
@@ -325,7 +325,7 @@ prem = [
 PR = {}
 for row, lab, val, st, note, key in prem:
     P.put(f"B{row}", lab, S["inp_lab_y"] if st.endswith("_y") else (S["inp_lab"] if st.startswith("inp") else S["lab_it"]))
-    P.put(f"C{row}", val, S[st]); PR[key] = f"C{row}"
+    P.put(f"C{row}", val, S["num_it"] if st == "int_it" else S[st]); PR[key] = f"C{row}"
     if note: P.put(f"D{row}", note, S["note"]); P.merge(f"D{row}:K{row}", S["note"])
     P.row_h[row] = 30 if (len(lab) > 44 or len(note) > 95) else 15
 P.sub(35, "Valores derivados das premissas", cols="B:C", style="sub_l")
@@ -338,11 +338,11 @@ derived = [
 for row, lab, f, st, key in derived:
     P.put(f"B{row}", lab, S["lab_it"]); P.put(f"C{row}", f, S[st]); PR[key] = f"C{row}"; P.row_h[row] = 30 if len(lab) > 44 else 15
 P.put("D39", "Critério de alocação de custo da aba 'Cálculos da Operação'; o material SF de 31.08 alocava 26,2% do custo (13,1% por Holding)", S["note"]); P.merge("D39:K39", S["note"]); P.row_h[39] = 30
-P.redbar(41, "Premissas fiscais e ressalvas (material SF de 31.08.2026)")
+P.redbar(41, "Premissas fiscais e ressalvas (material SF de 31.08.2026 e critérios adotados neste modelo)")
 ress = [
-    "• Custo alocado no cash-out: a secundária é tratada como concomitante à incorporação e o custo de cada Holding é alocado proporcionalmente à fração alienada (13,1% ÷ 43,1%). O imposto do cash-out é apurado na aba 'Cálculos da Operação' nos cenários A (custo original) e B (custo incrementado).",
+    "• Custo alocado no cash-out (critério deste modelo, herdado da aba 'Cálculos da Operação'; o material SF de 31.08 alocava 26,2% do custo, 13,1% de cada Holding): a secundária é tratada como concomitante à incorporação e o custo de cada Holding é alocado proporcionalmente à fração alienada (13,1% ÷ 43,1%). O imposto do cash-out é apurado na aba 'Cálculos da Operação' nos cenários A (custo original) e B (custo incrementado).",
     "• Regime das Holdings: lucro presumido — premissa relevante para a tributação do cash-out. Na futura alienação dos 60% remanescentes, a carga poderá ser reduzida se, à época, as Holdings estiverem no lucro real e dispuserem de prejuízos fiscais e bases negativas de CSLL compensáveis, observadas as limitações aplicáveis.",
-    "• Segregação de risco no CPC 15: o custo das Holdings é aberto em custo original (incontroverso), reflexo do PL contábil da CNP (neutralidade do MEP — art. 33, §2º, do DL 1.598/77; precedente WTorre, com decisões CARF de 2024 em sentido contrário) e reflexo da mais-valia (parcela mais exposta). No material de 31.08 a mais-valia era estimada em 34,6% do PL da CNP (proporção DTT 300/866); aqui é o valor de mercado menos o PL contábil.",
+    "• Segregação de risco no CPC 15: o custo das Holdings é aberto em custo original (incontroverso), reflexo do PL contábil da CNP (neutralidade do MEP — art. 33, §2º, do DL 1.598/77; precedente WTorre, com decisões CARF de 2024 em sentido contrário — fundamentos discutidos nas calls com a SF) e reflexo da mais-valia (parcela mais exposta). No material de 31.08 a mais-valia era estimada em 34,6% do PL da CNP (proporção DTT 300/866); aqui é o valor de mercado menos o PL contábil.",
     "• CPC 19: o ganho de avaliação a valor justo (AVJ) tem tributação diferida, controlado em subconta (arts. 13 e 14 da Lei 12.973/14), fica 'carimbado' a 34% e é devido na realização do investimento, independentemente da entidade que aliene a participação.",
     "• ITCMD: não analisado neste material. Em caráter preliminar, o cenário de operação em conjunto pode elevar o valor patrimonial das Holdings (reconhecimento a valor justo da CNP e da Embracon), com possível repercussão na base do imposto, a depender do critério legal aplicável.",
     "• Caráter ilustrativo: os exemplos foram elaborados com informações estimadas, de diversas fontes, não auditadas; não substituem a análise dos documentos definitivos da Transação e da contabilização efetivamente adotada, nem devem ser entendidos como estimativa de custo ou contingência tributária.",
@@ -543,18 +543,18 @@ K.put("B22", "Inv. JO", S["hdr_dark_l"]); K.put("C22", f"={CPC19}!{C19['vj100']}
 K.put("F22", "Total = 60% do valor justo da JO (aba 'CPC 19').", S["cell_it"]); K.merge("F22:K22", S["cell_it"])
 for r in (20, 21, 22): K.row_h[r] = 32
 K.redbar(24, "Venda futura dos 60%")
-K.h14(26, "CPC 15 | Combinação de Negócios", "h14_red", cols="B:D"); K.h14(26, "CPC 19 | Joint Operation", "h14_blue", cols="F:H")
-K.header(27, [("B", "Preço", "hdr_l"), ("C", "Venda pela PJ", "hdr_c"), ("D", "Venda pela PF", "hdr_c"), ("F", "Preço", "hdr_l"), ("G", "Venda pela PJ", "hdr_c"), ("H", "Venda pela PF", "hdr_c")], height=30)
+K.h14(26, "CPC 15 | Combinação de Negócios", "h14_red", cols="C:E"); K.h14(26, "CPC 19 | Joint Operation", "h14_blue", cols="G:I")
+K.header(27, [("C", "Preço", "hdr_l"), ("D", "Venda pela PJ", "hdr_c"), ("E", "Venda pela PF", "hdr_c"), ("G", "Preço", "hdr_l"), ("H", "Venda pela PJ", "hdr_c"), ("I", "Venda pela PF", "hdr_c")], height=30)
 for i, row in enumerate((28, 29, 30)):
-    K.put(f"B{row}", f"={ALI}!{ALR['precos'][i]}", xf(F_B, fill=FILL_GRAY, border=B_TBLR, nf=NF_INT, h="left", v="center"))
-    K.put(f"C{row}", f"={ALI}!{ALR['venda_c15_pj'][i]}", S["int_b"]); K.put(f"D{row}", f"={ALI}!{ALR['venda_c15_pf'][i]}", S["int_b"])
-    K.put(f"F{row}", f"={ALI}!{ALR['precos'][i]}", xf(F_B, fill=FILL_GRAY, border=B_TBLR, nf=NF_INT, h="left", v="center"))
-    K.put(f"G{row}", f"={ALI}!{ALR['venda_c19_pj'][i]}", S["int_b"]); K.put(f"H{row}", f"={ALI}!{ALR['venda_c19_pf'][i]}", S["int_b"]); K.row_h[row] = 18
+    K.put(f"C{row}", f"={ALI}!{ALR['precos'][i]}", xf(F_B, fill=FILL_GRAY, border=B_TBLR, nf=NF_INT, h="left", v="center"))
+    K.put(f"D{row}", f"={ALI}!{ALR['venda_c15_pj'][i]}", S["int_b"]); K.put(f"E{row}", f"={ALI}!{ALR['venda_c15_pf'][i]}", S["int_b"])
+    K.put(f"G{row}", f"={ALI}!{ALR['precos'][i]}", xf(F_B, fill=FILL_GRAY, border=B_TBLR, nf=NF_INT, h="left", v="center"))
+    K.put(f"H{row}", f"={ALI}!{ALR['venda_c19_pj'][i]}", S["int_b"]); K.put(f"I{row}", f"={ALI}!{ALR['venda_c19_pf'][i]}", S["int_b"]); K.row_h[row] = 18
 K.put("B31", "Imposto (IRPJ/CSLL de 34% na Holding; IR de 22,5% na PF) na venda dos 60%, em R$ milhões — valores da aba 'Alienação Futura (PJ x PF)'.", S["note"]); K.merge("B31:K31", S["note"]); K.row_h[31] = 16
 K.redbar(33, "Conclusão executiva")
 concl_txt = [
     "• CPC 15 é o cenário mais favorável às Holdings: o custo do investimento incorpora o reflexo da incorporação sem registro de passivo fiscal diferido, o imposto na venda futura acompanha o preço e existe a alternativa de venda pelas pessoas físicas à alíquota de 22,5%. O risco concentra-se na neutralidade do reflexo do PL contábil da CNP; com as premissas atuais a mais-valia é pequena e o imposto potencial sobre ela é residual.",
-    "• CPC 19 elimina a discussão sobre o custo, mas ao preço de reconhecer ganho de AVJ sobre toda a JO — inclusive a Embracon, que no CPC 15 não é reavaliada — com IRPJ/CSLL de 34% carimbado e devido na venda em qualquer cenário de preço, sem a alternativa da PF. Além disso, o valor patrimonial das Holdings sobe ao valor justo, com impacto direto na base de cálculo do ITCMD (tema não tratado neste material).",
+    "• CPC 19 elimina a discussão sobre o custo, mas ao preço de reconhecer ganho de AVJ sobre toda a JO — inclusive a Embracon, que no CPC 15 não é reavaliada — com IRPJ/CSLL de 34% carimbado e devido na venda em qualquer cenário de preço, sem a alternativa da PF. Além disso, o valor patrimonial das Holdings poderá subir ao valor justo (reconhecimento da CNP e da Embracon), com possível repercussão na base de cálculo do ITCMD, a depender do critério legal aplicável (tema não analisado neste material).",
     "• Na venda ao valor justo ou acima, a carga dos dois regimes é próxima (diferença = 34% da mais-valia da CNP); abaixo do valor justo, o CPC 19 é substancialmente mais oneroso. Se a tese de neutralidade do reflexo fosse integralmente afastada (RISCO 1), o CPC 15 passaria a ser mais oneroso que o CPC 19 nas vendas a partir do valor justo — daí a importância de documentar a tese e o laudo de avaliação (PPA).",
     "Ressalvas: valores ilustrativos em R$ milhões, data-base 30.06.2026, com as premissas da aba 'Premissas'. As Holdings estão no lucro presumido; na venda futura, a carga efetiva na PJ poderia ser reduzida com a opção pelo lucro real e a existência de prejuízos compensáveis. O custo das quotas nas PFs é premissa ilustrativa a confirmar. O material não avalia o ITCMD.",
 ]
@@ -579,6 +579,12 @@ files["xl/drawings/drawing3.xml"] = d3.encode("utf-8")
 # Organograma: logo + título (mesma âncora/estilo); as duas imagens do organograma descem 7 linhas para abrir espaço
 d1 = files["xl/drawings/drawing1.xml"].decode("utf-8")
 d1 = re.sub(r"<xdr:row>(\d+)</xdr:row>", lambda m: f"<xdr:row>{int(m.group(1)) + 7}</xdr:row>", d1)
+def _to_one_cell(m):
+    body = m.group(0)
+    ext = re.search(r'<a:ext cx="(\d+)" cy="(\d+)"/>', body)
+    body = re.sub(r"<xdr:to>.*?</xdr:to>", f'<xdr:ext cx="{ext.group(1)}" cy="{ext.group(2)}"/>', body, count=1, flags=re.S)
+    return body.replace('<xdr:twoCellAnchor editAs="oneCell">', "<xdr:oneCellAnchor>").replace("</xdr:twoCellAnchor>", "</xdr:oneCellAnchor>")
+d1 = re.sub(r'<xdr:twoCellAnchor editAs="oneCell">.*?</xdr:twoCellAnchor>', _to_one_cell, d1, flags=re.S)
 logo_anchor = re.search(r"<xdr:oneCellAnchor>.*?</xdr:oneCellAnchor>", drawing_tpl, re.S).group(0)
 logo_anchor = logo_anchor.replace('r:embed="rId1"', 'r:embed="rId3"').replace('id="2" name="Imagem 1"', 'id="4" name="Logo SF"')
 d1 = d1.replace("</xdr:wsDr>", logo_anchor + "</xdr:wsDr>")
@@ -590,6 +596,7 @@ s1 = files["xl/worksheets/sheet1.xml"].decode("utf-8")
 date_xf = xf(F_IT, h="left", v="top")
 s1 = re.sub(r"<sheetData>.*?</sheetData>", f'<sheetData><row r="2"><c r="C2" s="6"/></row><row r="4" ht="26" customHeight="1"><c r="E4" s="{S["title"]}" t="inlineStr"><is><t>Organograma</t></is></c></row><row r="5" ht="26" customHeight="1"><c r="E5" s="{date_xf}" t="inlineStr"><is><t>4 de setembro de 2026</t></is></c></row></sheetData>', s1, flags=re.S)
 s1 = s1.replace('<dimension ref="C2"/>', '<dimension ref="C2:E5"/>')
+s1 = re.sub(r"<cols>.*?</cols>", '<cols><col min="1" max="1" width="7.54296875" customWidth="1"/><col min="3" max="3" width="16.453125" customWidth="1"/><col min="4" max="4" width="20" customWidth="1"/></cols>', s1, count=1, flags=re.S)
 files["xl/worksheets/sheet1.xml"] = s1.encode("utf-8")
 
 # Cálculos da Operação: premissas passam a apontar para a aba Premissas (valores idênticos); remove título órfão "CPC 19" (linha 96)
@@ -609,6 +616,10 @@ for ref, (kind, target) in links.items():
         new = f'<c r="{ref}"{attrs} t="str"><f>{PREM}!{target}</f><v>{txt}</v></c>'
     s2 = s2.replace(m.group(0), new)
 s2 = re.sub(r'<row r="96".*?</row>', '', s2, count=1, flags=re.S)
+s2 = re.sub(r'<row r="5"[^>]*>.*?</row>', f'<row r="5" spans="2:11" ht="26" customHeight="1"><c r="E5" s="{xf(F_IT, h="left", v="top")}" t="inlineStr"><is><t>4 de setembro de 2026</t></is></c></row>', s2, count=1, flags=re.S)
+for ref, tgt in (("C84", "D69"), ("E84", "D70")):
+    m = re.search(rf'<c r="{ref}"([^>]*)><v>600</v></c>', s2); assert m, ref
+    s2 = s2.replace(m.group(0), f'<c r="{ref}"{m.group(1)}><f>{tgt}</f><v>600</v></c>')
 files["xl/worksheets/sheet2.xml"] = s2.encode("utf-8")
 
 # workbook.xml: ordem das abas, aba ativa, fullCalcOnLoad

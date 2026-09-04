@@ -38,3 +38,11 @@ Alienação (reancorada) e Conclusão. Título: linha 4, itálico 20, coluna C (
 - Título órfão "CPC 19 — Joint Operation" na linha 96 da aba Cálculos removido (conteúdo foi para a aba CPC 19).
 - Alienação: blocos "1) Custo do Investimento…" (CPC 15 em camadas e CPC 19) saíram da aba (camadas → Conclusão; CPC 19 → aba própria); seções renumeradas 1/2/3; título com acento ("Análise"); 54 células da venda/conclusão conferidas idênticas à v4.
 - Correção de bug no build: preço "igual ao valor justo" apontava para 'CPC 19'!D21 (493,2); corrigido para D22 (3.573).
+- Após revisão adversarial (workflow 4 lentes + verificadores, 9 achados confirmados), aplicado: (a) Organograma — imagens
+  convertidas para oneCellAnchor e colunas A/D ajustadas para o título ficar na mesma posição; (b) `Cálculos`!E5 recebe a
+  data (linha 5, altura 26) como as demais abas; (c) `Cálculos`!C84/E84 (preço 600 por Holding) passam a `=D69`/`=D70`
+  (valor idêntico); (d) Premissas C20/C21 (127) derivados de C19/2 — o modelo do usuário dobra a coluna Savian, então um
+  input independente para JVFJ seria enganoso; (e) texto ITCMD da Conclusão alinhado ao PDF ("possível repercussão…");
+  (f) cabeçalhos das premissas indicam o que é critério do modelo vs. material SF; (g) linha 5 = 44 pt nas abas novas
+  (folga do logo); (h) tabelas de venda da Conclusão em C:E / G:I; (i) alturas de linha calibradas para Aptos Narrow.
+- Organograma: as duas imagens desceram 7 linhas para abrir espaço ao logo/título (sem alteração de tamanho).
